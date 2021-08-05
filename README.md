@@ -5,12 +5,11 @@ This package is where all the utility functions as well as all the custom inspec
 - [Unity Utilities](#unity-utilities)
   - [Installation](#installation)
   - [Custom Propery Attribute](#custom-propery-attribute)
-    - [A simple example:](#a-simple-example)
   - [Utilities](#utilities)
-    - [A simple example for MathUtil:](#a-simple-example-for-mathutil)
+    - [MathUtil](#mathutil)
     - [Under the hood:](#under-the-hood)
   - [Logging](#logging)
-    - [A simple example:](#a-simple-example-1)
+    - [A simple example:](#a-simple-example)
   - [Support the project!](#support-the-project)
   - [Join the community!](#join-the-community)
   - [License](#license)
@@ -29,7 +28,6 @@ This package depends on:
 
 ## Custom Propery Attribute
 
-### A simple example:
 ```cs
 using UnityEngine;
 using Voxell.Inspector;
@@ -59,7 +57,7 @@ public class CustomInspectorTest : MonoBehaviour
 
 ## Utilities
 
-### A simple example for MathUtil:
+### MathUtil
 
 ```cs
 using UnityEngine;
