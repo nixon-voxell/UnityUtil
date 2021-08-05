@@ -2,6 +2,21 @@
 
 This package is where all the utility functions as well as all the custom inspector drawer code lives.
 
+- [Unity Utilities](#unity-utilities)
+  - [Installation](#installation)
+  - [Custom Propery Attribute](#custom-propery-attribute)
+    - [A simple example:](#a-simple-example)
+  - [Utilities](#utilities)
+    - [A simple example for MathUtil:](#a-simple-example-for-mathutil)
+    - [Under the hood:](#under-the-hood)
+  - [Logging](#logging)
+    - [A simple example:](#a-simple-example-1)
+  - [Support the project!](#support-the-project)
+  - [Join the community!](#join-the-community)
+  - [License](#license)
+  - [References](#references)
+  - [Credits](#credits)
+
 ## Installation
 
 This package depends on:
@@ -27,6 +42,11 @@ public class CustomInspectorTest : MonoBehaviour
   public string[] testSceneArray;
   [InspectOnly]
   public int inspectOnlyInt;
+
+  [StreamingAssetFilePath]
+  public string streamingAssetFilePath;
+  [StreamingAssetFolderPath]
+  public string streamingAssetFolderPath;
 
   [Button]
   void TestButton() => Debug.Log("TestButton function invoked!");
@@ -98,6 +118,10 @@ public class LoggingTest : MonoBehaviour
 This repository as a whole is licensed under the GNU Public License, Version 3. Individual files may have a different, but compatible license.
 
 See [license file](./LICENSE) for details.
+
+## References
+
+- https://github.com/dbrizov/NaughtyAttributes
 
 ## Credits
 
