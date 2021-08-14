@@ -28,12 +28,9 @@ namespace Voxell.Inspector
     public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
     {
       GUI.enabled = false;
-      EditorGUILayout.PropertyField(property, new GUIContent(ObjectNames.NicifyVariableName(property.name)));
+      EditorGUI.PropertyField(rect, property, label, true);
       GUI.enabled = true;
     }
-
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => 0;
-
   }
 
   [CustomPropertyDrawer(typeof(SceneAttribute))]
@@ -90,7 +87,7 @@ namespace Voxell.Inspector
             string filePath = EditorUtility.OpenFilePanel("Asset File", Application.streamingAssetsPath, "");
             if (filePath != "") property.stringValue = filePath.Substring(Application.streamingAssetsPath.Length+1);
           }
-          Rect assetLabelRect = new Rect(new Vector2(rect.x + 22.0f, rect.y), new Vector2(102.0f, rect.size.y));
+          Rect assetLabelRect = new Rect(new Vector2(rect.x + 22.0f, rect.y), new Vector2(116.0f, rect.size.y));
           EditorGUI.LabelField(assetLabelRect, "StreamingAssets/");
           Rect filePathRect = new Rect(new Vector2(assetLabelRect.x + assetLabelRect.size.x, rect.y), new Vector2(rect.size.x - assetLabelRect.size.x - 22.0f, rect.size.y));
           GUI.enabled = false;
@@ -122,7 +119,7 @@ namespace Voxell.Inspector
             string filePath = EditorUtility.OpenFolderPanel("Asset Folder", Application.streamingAssetsPath, "");
             if (filePath != "") property.stringValue = filePath.Substring(Application.streamingAssetsPath.Length+1);
           }
-          Rect assetLabelRect = new Rect(new Vector2(rect.x + 22.0f, rect.y), new Vector2(102.0f, rect.size.y));
+          Rect assetLabelRect = new Rect(new Vector2(rect.x + 22.0f, rect.y), new Vector2(116.0f, rect.size.y));
           EditorGUI.LabelField(assetLabelRect, "StreamingAssets/");
           Rect filePathRect = new Rect(new Vector2(assetLabelRect.x + assetLabelRect.size.x, rect.y), new Vector2(rect.size.x - assetLabelRect.size.x - 22.0f, rect.size.y));
           GUI.enabled = false;
