@@ -18,6 +18,7 @@ All rights reserved.
 */
 
 using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 
 namespace Voxell.Mathx
 {
@@ -42,13 +43,27 @@ namespace Voxell.Mathx
     { for (int i=0; i < array.Length; i++) array[i] = value; }
 
     /// <summary>
+    /// Generate an int array with sequence id as it's value
+    /// (ex: [0, 1, 2, 3, 4] will be generated if `length` of 5 is being given)
+    /// </summary>
+    /// <param name="length">number of elements</param>
+    public static int[] GenerateSeqArray(int length)
+    {
+      int[] array = new int[length];
+      for (int i=0; i < length; i++) array[i] = i;
+      return array;
+    }
+
+    /// <summary>
     /// Shuffles an array
     /// </summary>
-    public static void ShuffleArray<T>(ref T[] decklist)
+    public static void ShuffleArray<T>(ref T[] decklist, uint seed=1)
     {
+      // make sure seed is not 0
+      Random rand = new Random(math.max(seed, 1));
       for (int i = 0; i < decklist.Length; i++)
       {
-        int randomIdx = UnityEngine.Random.Range(0, decklist.Length);
+        int randomIdx = rand.NextInt(0, decklist.Length);
         T tempItem = decklist[randomIdx];
         decklist[randomIdx] = decklist[i];
         decklist[i] = tempItem;
