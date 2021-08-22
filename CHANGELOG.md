@@ -1,3 +1,9 @@
+## [1.1.1]
+
+- Removed:
+  - VectorUtil.cs (seems unnecessary)
+
+
 ## [1.1.0]
 
 - New Features:
