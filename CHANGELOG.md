@@ -3,6 +3,10 @@
 - Removed:
   - VectorUtil.cs (seems unnecessary)
 
+- New Feature
+  - float2 extensions
+    - float2 perpendicular vector
+    - angle between 2 float2 vectors
 
 ## [1.1.0]
 
