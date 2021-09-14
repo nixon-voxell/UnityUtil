@@ -63,17 +63,35 @@ public class CustomInspectorTest : MonoBehaviour
 using UnityEngine;
 using Voxell.Mathx;
 
-Vector3 vec1 = new Vector3(0.1f, 0.5f, 0.9f);
-Vector3 vec2 = new Vector3(2.0, 0.1f, 1.0f);
-Vector3 maxVec = VectorUtil.SingleOperation(vec1, vec2, Mathf.Max);
+// generate array [0, 1, 2, 3, 4]
+int[] shuffledArray = GenerateSeqArray(5);
+// shuffles array
+ShuffleArray<int>(ref shuffledArray, 3);
+Debug.Log(shuffledArray);
 
 ```
 ### Under the hood:
 
 ```cs
-maxVec.x = Mathf.Max(vec1.x, vec2.x);
-maxVec.y = Mathf.Max(vec1.y, vec2.y);
-maxVec.z = Mathf.Max(vec1.z, vec2.z);
+using Unity.Mathematics;
+
+// GenerateSeqArray method
+int length = 5;
+int[] shuffledArray = new int[length];
+for (int i=0; i < length; i++) shuffledArray[i] = i;
+
+// ShuffleArray method
+int seed = 3;
+Random rand = new Random(math.max(seed, 1));
+for (int i = 0; i < shuffledArray.Length; i++)
+{
+  int randomIdx = rand.NextInt(0, shuffledArray.Length);
+  int tempItem = shuffledArray[randomIdx];
+  shuffledArray[randomIdx] = shuffledArray[i];
+  shuffledArray[i] = tempItem;
+}
+
+Debug.Log(shuffledArray);
 ```
 
 ## Logging

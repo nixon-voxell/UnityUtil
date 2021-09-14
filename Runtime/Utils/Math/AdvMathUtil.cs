@@ -17,23 +17,14 @@ The Original Code is Copyright (C) 2020 Voxell Technologies.
 All rights reserved.
 */
 
-using UnityEngine;
 using System.Runtime.CompilerServices;
+using UnityEngine;
+using Unity.Mathematics;
 
 namespace Voxell.Mathx
 {
   public static class AdvMathUtil
   {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint ExpandBits(uint v)
-    {
-      v = (v * 0x00010001u) & 0xFF0000FFu;
-      v = (v * 0x00000101u) & 0x0F00F00Fu;
-      v = (v * 0x00000011u) & 0xC30C30C3u;
-      v = (v * 0x00000005u) & 0x49249249u;
-      return v;
-    }
-
     /// <summary>
     /// Calculates a 30-bit Morton code for the given 3D point located within the unit cube [0,1]
     /// </summary>
@@ -41,23 +32,32 @@ namespace Voxell.Mathx
     /// <param name="y">y coordinate</param>
     /// <param name="z">z coordinate</param>
     /// <returns>morton code</returns>
-    public static uint Morton3D(float x, float y, float z)
-    {
-      x = Mathf.Min(Mathf.Max(x * 1024.0f, 0.0f), 1023.0f);
-      y = Mathf.Min(Mathf.Max(y * 1024.0f, 0.0f), 1023.0f);
-      z = Mathf.Min(Mathf.Max(z * 1024.0f, 0.0f), 1023.0f);
-      uint xx = ExpandBits((uint)x);
-      uint yy = ExpandBits((uint)y);
-      uint zz = ExpandBits((uint)z);
-      return xx * 4 + yy * 2 + zz;
-    }
+    public static uint Morton3D(float x, float y, float z) => Morton3D(new float3(x, y, z));
 
     /// <summary>
     /// Calculates a 30-bit Morton code for the given 3D point located within the unit cube [0,1]
     /// </summary>
     /// <param name="point">3D coordinate</param>
     /// <returns>morton code</returns>
-    public static uint Morton3D(Vector3 point) => Morton3D(point.x, point.y, point.z);
+    public static uint Morton3D(float3 point)
+    {
+      point *= 1024.0f;
+      point = math.clamp(point, 0.0f, 1023.0f);
+      uint xx = expandBits((uint)point.x);
+      uint yy = expandBits((uint)point.y);
+      uint zz = expandBits((uint)point.z);
+      return xx * 4 + yy * 2 + zz;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static uint expandBits(uint v)
+    {
+      v = (v * 0x00010001u) & 0xFF0000FFu;
+      v = (v * 0x00000101u) & 0x0F00F00Fu;
+      v = (v * 0x00000011u) & 0xC30C30C3u;
+      v = (v * 0x00000005u) & 0x49249249u;
+      return v;
+    }
 
     /// <summary>
     /// Count leading zeros of a 32 bit unsigned integer
