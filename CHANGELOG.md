@@ -7,6 +7,8 @@
   - float2 extensions
     - float2 perpendicular vector
     - angle between 2 float2 vectors
+  - float3 extensions
+    - float3 LongAxis (select axis with the largest value)
 
 ## [1.1.0]
 
