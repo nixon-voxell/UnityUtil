@@ -1,0 +1,40 @@
+/*
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+The Original Code is Copyright (C) 2020 Voxell Technologies.
+All rights reserved.
+*/
+
+using System.Runtime.CompilerServices;
+using Unity.Mathematics;
+
+namespace Voxell.Mathx
+{
+  public static class mathx
+  {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool approximately(float a, float b)
+    {
+      // If a or b is zero, compare that the other is less or equal to epsilon.
+      // If neither a or b are 0, then find an epsilon that is good for
+      // comparing numbers at the maximum magnitude of a and b.
+      // Floating points have about 7 significant digits, so
+      // 1.000001f can be represented while 1.0000001f is rounded to zero,
+      // thus we could use an epsilon of 0.000001f for comparing values close to 1.
+      // We multiply this epsilon by the biggest magnitude of a and b.
+      return math.abs(b - a) < math.max(0.000001f * math.max(math.abs(a), math.abs(b)), math.EPSILON * 8);
+    }
+  }
+}
