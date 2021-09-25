@@ -1,5 +1,12 @@
 ## [1.1.1]
 
+- Changes:
+  - GraphicsUtil
+    - Generalize dispose buffers and destroy object array functions
+  - NativeUtil
+    - Inlining of array and list disposition functions
+    - removed vector to float converter (since we can use NativeArray/NativeList.CopyFrom)
+
 - Removed:
   - VectorUtil.cs (seems unnecessary)
 
