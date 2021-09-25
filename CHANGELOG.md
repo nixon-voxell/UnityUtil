@@ -18,6 +18,7 @@
     - float3 LongAxis (select axis with the largest value)
   - mathx
     - approximately using Unity.Mathematics instead of Mathf
+  - Stride Size for all vector and matrix sizes
 
 ## [1.1.0]
 

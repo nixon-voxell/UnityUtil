@@ -47,23 +47,4 @@ namespace Voxell.Graphics
         array[d]?.Dispose();
     }
   }
-
-  public static class StrideSize
-  {
-    public static readonly int s_float = Marshal.SizeOf(typeof(float));
-    public static readonly int s_int = Marshal.SizeOf(typeof(int));
-    public static readonly int s_uint = Marshal.SizeOf(typeof(uint));
-    public static readonly int s_float2 =  Marshal.SizeOf(typeof(float2));
-    public static readonly int s_float3 =  Marshal.SizeOf(typeof(float3));
-    public static readonly int s_float4 =  Marshal.SizeOf(typeof(float4));
-    public static readonly int s_float2x2 = Marshal.SizeOf(typeof(float2x2));
-    public static readonly int s_float2x3 = Marshal.SizeOf(typeof(float2x3));
-    public static readonly int s_float2x4 = Marshal.SizeOf(typeof(float2x4));
-    public static readonly int s_float3x2 = Marshal.SizeOf(typeof(float3x2));
-    public static readonly int s_float3x3 = Marshal.SizeOf(typeof(float3x3));
-    public static readonly int s_float3x4 = Marshal.SizeOf(typeof(float3x4));
-    public static readonly int s_float4x2 = Marshal.SizeOf(typeof(float4x2));
-    public static readonly int s_float4x3 = Marshal.SizeOf(typeof(float4x3));
-    public static readonly int s_float4x4 = Marshal.SizeOf(typeof(float4x4));
-  }
 }
