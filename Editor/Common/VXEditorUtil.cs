@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Voxell.Inspector
 {
-  public static class EditorUtil
+  public static class VXEditorUtil
   {
     public static IEnumerable<FieldInfo> GetAllFields(object target, Func<FieldInfo, bool> predicate)
     {

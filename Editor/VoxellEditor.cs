@@ -32,7 +32,7 @@ namespace Voxell.Inspector
 
     protected virtual void OnEnable()
     {
-      _methods = EditorUtil.GetAllMethods(
+      _methods = VXEditorUtil.GetAllMethods(
         target, m => m.GetCustomAttributes(typeof(ButtonAttribute), true).Length > 0);
     }
 

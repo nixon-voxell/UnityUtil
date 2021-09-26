@@ -78,7 +78,7 @@ namespace Voxell.Inspector
       if (property.propertyType == SerializedPropertyType.String)
       {
         rect.size = new Vector2(rect.size.x, 20.0f);
-        property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label, true, VoxellEditorStyles.subFoldoutStyle);
+        property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label, true, VXEditorStyles.SubFoldoutStyle);
         if (property.isExpanded)
         {
           rect.y += 20.0f;
@@ -110,7 +110,7 @@ namespace Voxell.Inspector
       if (property.propertyType == SerializedPropertyType.String)
       {
         rect.size = new Vector2(rect.size.x, 20.0f);
-        property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label, true, VoxellEditorStyles.subFoldoutStyle);
+        property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label, true, VXEditorStyles.SubFoldoutStyle);
         if (property.isExpanded)
         {
           rect.y += 20.0f;

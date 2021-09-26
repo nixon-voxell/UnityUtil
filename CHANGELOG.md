@@ -1,28 +1,47 @@
+## [1.2.0]
+
+- New Features
+  - New tool: Mesh Info [EditorWindow]
+    - Under *Tools/Voxell/Mesh Info*
+    - Shows mesh stats based on the GameObject/Prefab you select.
+    - Recursively search for children objects inside the GameObject/Prefab for MeshFilter and SkinnedMeshRenderer.
+    - Stats include:
+      - Vertex Count
+      - Sub Mesh Count
+      - Triangle Count
+    - Ping functionality allows user to ping GameObject or Mesh location.
+    - Multi select support.
+
+- Changes
+  - EditorStyles -> VXEditorStyles to prevent conflict with UnityEditor namespace
+  - EditorUtil -> VXEditorUtil (match the above naming convention)
+  - Moved NativeUtil from Voxell.Mathx to Voxell namespace
+
 ## [1.1.1]
 
-- Changes:
+- Removed
+  - VectorUtil.cs (seems unnecessary)
+
+- New Features
+  - float2_extension
+    - float2 perpendicular vector
+    - angle between 2 float2 vectors
+  - float3_extension
+    - float3 LongAxis (select axis with the largest value)
+  - mathx
+    - approximately using Unity.Mathematics instead of Mathf.
+  - Stride Size for all vector and matrix sizes
+
+- Changes
   - GraphicsUtil
     - Generalize dispose buffers and destroy object array functions
   - NativeUtil
     - Inlining of array and list disposition functions
     - removed vector to float converter (since we can use NativeArray/NativeList.CopyFrom)
 
-- Removed:
-  - VectorUtil.cs (seems unnecessary)
-
-- New Feature
-  - float2 extensions
-    - float2 perpendicular vector
-    - angle between 2 float2 vectors
-  - float3 extensions
-    - float3 LongAxis (select axis with the largest value)
-  - mathx
-    - approximately using Unity.Mathematics instead of Mathf
-  - Stride Size for all vector and matrix sizes
-
 ## [1.1.0]
 
-- New Features:
+- New Features
   - Buffer Array disposing utilities in GraphicsUtil.
   - common stride sizes in a static class called StrideSize.
   - ComputeShaderUtil for handling simple parallel task.

@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 
-namespace Voxell.Mathx
+namespace Voxell
 {
   public static class NativeUtil
   {
