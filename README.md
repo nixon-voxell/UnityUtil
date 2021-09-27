@@ -7,7 +7,7 @@ This package is where all the utility functions as well as all the custom inspec
   - [Custom Propery Attribute](#custom-propery-attribute)
   - [Utilities](#utilities)
     - [MathUtil](#mathutil)
-    - [Under the hood:](#under-the-hood)
+    - [Under the hood](#under-the-hood)
   - [Logging](#logging)
     - [A simple example:](#a-simple-example)
   - [Support the project!](#support-the-project)
@@ -70,7 +70,7 @@ ShuffleArray<int>(ref shuffledArray, 3);
 Debug.Log(shuffledArray);
 
 ```
-### Under the hood:
+### Under the hood
 
 ```cs
 using Unity.Mathematics;
@@ -141,7 +141,7 @@ See [license file](./LICENSE) for details.
 
 ## Credits
 
-Python Logo by [Jessica Williamson](https://www.behance.net/gallery/96750899/Python-Logo-Redesign):
+Python Logo by [Jessica Williamson](https://www.behance.net/gallery/96750899/Python-Logo-Redesign)
 
 <a href ="https://discord.gg/WDBnuNH" target="_blank">
   <img src="Resources/PythonLogo.png" alt="python_logo" width="50px" height="50px"/>

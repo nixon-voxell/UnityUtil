@@ -79,7 +79,7 @@ namespace Voxell.Inspector
       SerializedProperty property,
       bool draggable, bool displayHeader,
       bool displayAddButton, bool displayRemoveButton,
-      string prefix=""
+      string prefix = ""
     )
     {
       bool showPrefix = !string.IsNullOrEmpty(prefix);
