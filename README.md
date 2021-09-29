@@ -19,12 +19,9 @@ This package is where all the utility functions as well as all the custom inspec
 ## Installation
 
 This package depends on:
-- com.unity.mathematics (Unity.Mathematics)
-- com.unity.collections (Unity.Collections)
 
-1. Install all dependencies from the Package Manager (only if it does not exists yet, you can check the `Packages` directory in Unity to double confirm).
-2. Clone this repository into your project's `Packages` folder.
-3. And you are ready to go!
+1. Clone this repository into your project's `Packages` folder.
+2. And you are ready to go!
 
 ## Custom Propery Attribute
 

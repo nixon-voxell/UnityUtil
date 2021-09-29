@@ -1,3 +1,14 @@
+## [1.3.0]
+
+- New Features
+  - Job Utilities (common parallel algorithm implementation).
+  - ReverseArrayJob: Reverse native array in parallel.
+
+- Changes
+  - Added package dependencies:
+    - "com.unity.jobs": "0.11.0-preview.6"
+    - "com.unity.burst": "1.5.5"
+
 ## [1.2.0]
 
 - New Features
