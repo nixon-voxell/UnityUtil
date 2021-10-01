@@ -1,6 +1,6 @@
 {
     "name": "VX.Util.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Voxell.Inspector",
     "references": [
         "GUID:b23efe0d0bd83184681bd63517e3c327"
     ],

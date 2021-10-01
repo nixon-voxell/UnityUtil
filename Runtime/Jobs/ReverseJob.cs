@@ -25,7 +25,7 @@ namespace Voxell.Jobs
 {
   [BurstCompile(CompileSynchronously = true)]
   public struct ReverseArrayJob<T> : IJobParallelFor
-  where T : unmanaged
+  where T : struct
   {
     private NativeArray<T> na_array;
     private int _arraySize;
@@ -41,6 +41,27 @@ namespace Voxell.Jobs
       T elem = na_array[index];
       na_array[index] = na_array[_arraySize - index];
       na_array[_arraySize - index] = elem;
+    }
+  }
+
+  [BurstCompile(CompileSynchronously = true)]
+  public struct ReverseListJob<T> : IJobParallelFor
+  where T : unmanaged
+  {
+    private NativeList<T> na_list;
+    private int _arraySize;
+
+    public ReverseListJob(ref NativeList<T> na_list, int arraySize)
+    {
+      this.na_list = na_list;
+      _arraySize = arraySize;
+    }
+
+    public void Execute(int index)
+    {
+      T elem = na_list[index];
+      na_list[index] = na_list[_arraySize - index];
+      na_list[_arraySize - index] = elem;
     }
   }
 }

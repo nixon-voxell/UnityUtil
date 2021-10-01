@@ -22,7 +22,7 @@ namespace Voxell
 
     /// <summary>Check if native array has been created or not before disposing it.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void DisposeArray<T>(ref NativeArray<T> na_array) where T : unmanaged
+    public static void DisposeArray<T>(ref NativeArray<T> na_array) where T : struct
     { if (na_array.IsCreated) na_array.Dispose(); }
 
     /// <summary>Check if native list has been created or not before disposing it.</summary>
@@ -32,7 +32,7 @@ namespace Voxell
 
     /// <summary>Reverse native array in parallel.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ReverseArray<T>(ref NativeArray<T> na_array) where T : unmanaged
+    public static void ReverseArray<T>(ref NativeArray<T> na_array) where T : struct
     {
       int arraySize = na_array.Length;
       int jobSize = na_array.Length/2;
@@ -51,6 +51,31 @@ namespace Voxell
 
       // parallel array reversal
       ReverseArrayJob<T> reverseArrayJob = new ReverseArrayJob<T>(ref na_array, arraySize);
+      JobHandle jobHandle = reverseArrayJob.Schedule(jobSize, 128);
+      jobHandle.Complete();
+    }
+
+    /// <summary>Reverse native list in parallel.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ReverseList<T>(ref NativeList<T> na_list) where T : unmanaged
+    {
+      int arraySize = na_list.Length;
+      int jobSize = na_list.Length/2;
+
+      // do it sequentially if job size is too small
+      if (jobSize < 256)
+      {
+        for (int i=0; i < jobSize; i++)
+        {
+          T elem = na_list[i];
+          na_list[i] = na_list[arraySize - i];
+          na_list[arraySize - i] = elem;
+        }
+        return;
+      }
+
+      // parallel array reversal
+      ReverseListJob<T> reverseArrayJob = new ReverseListJob<T>(ref na_list, arraySize);
       JobHandle jobHandle = reverseArrayJob.Schedule(jobSize, 128);
       jobHandle.Complete();
     }
