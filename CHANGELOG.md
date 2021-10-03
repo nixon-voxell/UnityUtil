@@ -3,11 +3,13 @@
 - New Features
   - Job Utilities (common parallel algorithm implementation).
   - ReverseArrayJob: Reverse native array in parallel.
+  - Native Incrementor (atomic incrementation of an int).
 
 - Changes
   - Added package dependencies:
     - "com.unity.jobs": "0.11.0-preview.6"
     - "com.unity.burst": "1.5.5"
+  - Fixed Bug: Mesh Info tool throws error when mesh filter or skinned mesh rendere has no mesh/missing mesh
 
 ## [1.2.0]
 
@@ -30,9 +32,6 @@
 
 ## [1.1.1]
 
-- Removed
-  - VectorUtil.cs (seems unnecessary)
-
 - New Features
   - float2_extension
     - float2 perpendicular vector
@@ -49,6 +48,9 @@
   - NativeUtil
     - Inlining of array and list disposition functions
     - removed vector to float converter (since we can use NativeArray/NativeList.CopyFrom)
+
+- Removed
+  - VectorUtil.cs (seems unnecessary)
 
 ## [1.1.0]
 

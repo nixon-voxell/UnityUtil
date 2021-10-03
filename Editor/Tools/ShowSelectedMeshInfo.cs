@@ -91,7 +91,7 @@ namespace Voxell.Inspector.Tools
             GameObject selection = selections[s];
             // check all _meshFilters
             _meshFilters = selection.GetComponentsInChildren<MeshFilter>();
-            for (int mf=0, length = _meshFilters.Length; mf < length; mf++)
+            for (int mf=0, length=_meshFilters.Length; mf < length; mf++)
             {
               if (!_meshes.Contains(_meshFilters[mf].sharedMesh))
               {
@@ -102,7 +102,7 @@ namespace Voxell.Inspector.Tools
 
             // check all skinned mesh renderers
             _skinnedMeshRenderers = selection.GetComponentsInChildren<SkinnedMeshRenderer>();
-            for (int sm=0, length = _skinnedMeshRenderers.Length; sm < length; sm++)
+            for (int sm=0, length=_skinnedMeshRenderers.Length; sm < length; sm++)
             {
               if (!_meshes.Contains(_skinnedMeshRenderers[sm].sharedMesh))
               {
