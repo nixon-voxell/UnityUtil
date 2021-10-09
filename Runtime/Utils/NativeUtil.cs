@@ -32,7 +32,7 @@ namespace Voxell
 
     /// <summary>Reverse native array in parallel.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ReverseArray<T>(ref NativeArray<T> na_array) where T : struct
+    public static void ParallelReverseArray<T>(ref NativeArray<T> na_array) where T : struct
     {
       int arraySize = na_array.Length;
       int jobSize = na_array.Length/2;
@@ -55,9 +55,24 @@ namespace Voxell
       jobHandle.Complete();
     }
 
+    /// <summary>Reverse native array in serial.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void SerialReverseArray<T>(ref NativeArray<T> na_array) where T : struct
+    {
+      int arraySize = na_array.Length;
+      int jobSize = na_array.Length/2;
+
+      for (int i=0; i < jobSize; i++)
+      {
+        T elem = na_array[i];
+        na_array[i] = na_array[arraySize - i];
+        na_array[arraySize - i] = elem;
+      }
+    }
+
     /// <summary>Reverse native list in parallel.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ReverseList<T>(ref NativeList<T> na_list) where T : unmanaged
+    public static void ParallelReverseList<T>(ref NativeList<T> na_list) where T : unmanaged
     {
       int arraySize = na_list.Length;
       int jobSize = na_list.Length/2;
@@ -78,6 +93,21 @@ namespace Voxell
       ReverseListJob<T> reverseArrayJob = new ReverseListJob<T>(ref na_list, arraySize);
       JobHandle jobHandle = reverseArrayJob.Schedule(jobSize, 128);
       jobHandle.Complete();
+    }
+
+    /// <summary>Reverse native list in serial.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void SerialReverseList<T>(ref NativeList<T> na_list) where T : unmanaged
+    {
+      int arraySize = na_list.Length;
+      int jobSize = na_list.Length/2;
+
+      for (int i=0; i < jobSize; i++)
+      {
+        T elem = na_list[i];
+        na_list[i] = na_list[arraySize - i];
+        na_list[arraySize - i] = elem;
+      }
     }
   }
 }
