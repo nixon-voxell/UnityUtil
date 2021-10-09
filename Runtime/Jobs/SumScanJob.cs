@@ -24,44 +24,26 @@ using Unity.Burst;
 namespace Voxell.Jobs
 {
   [BurstCompile]
-  public struct ReverseArrayJob<T> : IJobParallelFor
-  where T : struct
+  public struct SumScanJob : IJobParallelFor
   {
-    private NativeArray<T> na_array;
-    private int _arraySize;
+    [NativeDisableParallelForRestriction]
+    private NativeArray<int> na_array;
 
-    public ReverseArrayJob(ref NativeArray<T> na_array, int arraySize)
+    [NativeDisableParallelForRestriction, ReadOnly]
+    private NativeArray<int> na_prevArray;
+    private int _offset;
+
+    public SumScanJob(ref NativeArray<int> na_array, ref NativeArray<int> na_prevArray, int offset)
     {
       this.na_array = na_array;
-      _arraySize = arraySize;
+      this.na_prevArray = na_prevArray;
+      _offset = offset;
     }
 
     public void Execute(int index)
     {
-      T elem = na_array[index];
-      na_array[index] = na_array[_arraySize - index];
-      na_array[_arraySize - index] = elem;
-    }
-  }
-
-  [BurstCompile(CompileSynchronously = true)]
-  public struct ReverseListJob<T> : IJobParallelFor
-  where T : unmanaged
-  {
-    private NativeList<T> na_list;
-    private int _arraySize;
-
-    public ReverseListJob(ref NativeList<T> na_list, int arraySize)
-    {
-      this.na_list = na_list;
-      _arraySize = arraySize;
-    }
-
-    public void Execute(int index)
-    {
-      T elem = na_list[index];
-      na_list[index] = na_list[_arraySize - index];
-      na_list[_arraySize - index] = elem;
+      int sumIdx = index - _offset;
+      if (sumIdx > 0) na_array[index] += na_prevArray[sumIdx];
     }
   }
 }

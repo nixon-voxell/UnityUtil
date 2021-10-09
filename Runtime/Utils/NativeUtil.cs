@@ -109,5 +109,21 @@ namespace Voxell
         na_list[arraySize - i] = elem;
       }
     }
+
+    /// <summary>Perform a Hillis Steele inclusive sum scan.</summary>
+    /// <param name="na_array"></param>
+    public static void InclusiveSumScan(ref NativeArray<int> na_array)
+    {
+      int arrayLength = na_array.Length;
+      NativeArray<int> na_prevArray = new NativeArray<int>(na_array, Allocator.TempJob);
+      for (int offset=1; offset < arrayLength; offset <<= 1)
+      {
+        SumScanJob sumScanJob = new SumScanJob(ref na_array, ref na_prevArray, offset);
+        JobHandle jobHandle = sumScanJob.Schedule(arrayLength, 16);
+        jobHandle.Complete();
+        na_prevArray.CopyFrom(na_array);
+      }
+      na_prevArray.Dispose();
+    }
   }
 }

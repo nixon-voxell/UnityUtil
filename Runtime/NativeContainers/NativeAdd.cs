@@ -6,11 +6,11 @@ using Unity.Collections.LowLevel.Unsafe;
 namespace Voxell.NativeContainers
 {
   [StructLayout(LayoutKind.Sequential), NativeContainer, NativeContainerIsAtomicWriteOnly]
-  unsafe public struct NativeIncrementor : System.IDisposable
+  unsafe public struct NativeAdd : System.IDisposable
   {
     // the actual pointer to the allocated count needs to have restrictions relaxed
     // so jobs can be schedled with this container
-    [NativeDisableUnsafePtrRestriction] private int* _counter;
+    [NativeDisableUnsafePtrRestriction] private int* _valueHolder;
 
     #if ENABLE_UNITY_COLLECTIONS_CHECKS
     private AtomicSafetyHandle _safety;
@@ -28,31 +28,31 @@ namespace Voxell.NativeContainers
     // Keep track of where the memory for this was allocated
     private Allocator _allocatorLabel;
 
-    public NativeIncrementor(Allocator allocator)
+    public NativeAdd(Allocator allocator)
     {
       _allocatorLabel = allocator;
 
       // allocate native memory for a single integer
-      _counter = (int*)UnsafeUtility.Malloc(UnsafeUtility.SizeOf<int>(), 4, allocator);
+      _valueHolder = (int*)UnsafeUtility.Malloc(UnsafeUtility.SizeOf<int>(), 4, allocator);
 
       // create a dispose sentinel to track memory leaks. This also creates the AtomicSafetyHandle
       #if ENABLE_UNITY_COLLECTIONS_CHECKS
       DisposeSentinel.Create(out _safety, out _disposeSentinel, 0, _allocatorLabel);
       #endif
-      // initialize the count to 0 to avoid uninitialized data
-      Count = 0;
+      // initialize the value to 0 to avoid uninitialized data
+      Value = 0;
     }
 
-    public void Increment()
+    public void AtomicAdd(int value)
     {
       // verify that the caller has write permission on this data
       #if ENABLE_UNITY_COLLECTIONS_CHECKS
       AtomicSafetyHandle.CheckWriteAndThrow(_safety);
       #endif
-      Interlocked.Increment(ref *_counter);
+      Interlocked.Add(ref *_valueHolder, value);
     }
 
-    public int Count
+    public int Value
     {
       get
       {
@@ -60,7 +60,7 @@ namespace Voxell.NativeContainers
         #if ENABLE_UNITY_COLLECTIONS_CHECKS
         AtomicSafetyHandle.CheckReadAndThrow(_safety);
         #endif
-        return *_counter;
+        return *_valueHolder;
       }
       set
       {
@@ -68,11 +68,11 @@ namespace Voxell.NativeContainers
         #if ENABLE_UNITY_COLLECTIONS_CHECKS
         AtomicSafetyHandle.CheckWriteAndThrow(_safety);
         #endif
-        *_counter = value;
+        *_valueHolder = value;
       }
     }
 
-    public bool IsCreated => _counter != null;
+    public bool IsCreated => _valueHolder != null;
 
     public void Dispose()
     {
@@ -81,8 +81,8 @@ namespace Voxell.NativeContainers
       DisposeSentinel.Dispose(ref _safety, ref _disposeSentinel);
       #endif
 
-      UnsafeUtility.Free(_counter, _allocatorLabel);
-      _counter = null;
+      UnsafeUtility.Free(_valueHolder, _allocatorLabel);
+      _valueHolder = null;
     }
   }
 }
