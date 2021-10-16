@@ -4,6 +4,8 @@
   - Job Utilities (common parallel algorithm implementation).
   - ReverseArrayJob: Reverse native array in parallel.
   - Native Incrementor (atomic incrementation of an int).
+  - Native Add (atomic addition of an int).
+  - Hillis Steele inclusive sum scan implementation.
 
 - Changes
   - Added package dependencies:

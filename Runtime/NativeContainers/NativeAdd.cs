@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Unity.Collections;
@@ -6,14 +7,14 @@ using Unity.Collections.LowLevel.Unsafe;
 namespace Voxell.NativeContainers
 {
   [StructLayout(LayoutKind.Sequential), NativeContainer, NativeContainerIsAtomicWriteOnly]
-  unsafe public struct NativeAdd : System.IDisposable
+  unsafe public struct NativeAdd : IDisposable
   {
     // the actual pointer to the allocated count needs to have restrictions relaxed
     // so jobs can be schedled with this container
-    [NativeDisableUnsafePtrRestriction] private int* _valueHolder;
+    [NativeDisableUnsafePtrRestriction] internal int* _valueHolder;
 
     #if ENABLE_UNITY_COLLECTIONS_CHECKS
-    private AtomicSafetyHandle _safety;
+    internal AtomicSafetyHandle _safety;
     /*
     the dispose sentinel tracks memory leaks, it is a managed type so it is cleared to null when scheduling a job
     the job cannot dispose the container, and no one else can dispose it until the job has run,
@@ -22,23 +23,25 @@ namespace Voxell.NativeContainers
     since that would give the job access to a managed object
     */
     [NativeSetClassTypeToNullOnSchedule]
-    private DisposeSentinel _disposeSentinel;
+    internal DisposeSentinel _disposeSentinel;
     #endif
 
     // Keep track of where the memory for this was allocated
-    private Allocator _allocatorLabel;
+    internal Allocator _allocatorLabel;
 
     public NativeAdd(Allocator allocator)
     {
-      _allocatorLabel = allocator;
-
-      // allocate native memory for a single integer
-      _valueHolder = (int*)UnsafeUtility.Malloc(UnsafeUtility.SizeOf<int>(), 4, allocator);
-
       // create a dispose sentinel to track memory leaks. This also creates the AtomicSafetyHandle
       #if ENABLE_UNITY_COLLECTIONS_CHECKS
-      DisposeSentinel.Create(out _safety, out _disposeSentinel, 0, _allocatorLabel);
+      if (allocator <= Allocator.None)
+        throw new ArgumentException("Allocator must be Temp, TempJob or Persistent", nameof(allocator));
+      DisposeSentinel.Create(out _safety, out _disposeSentinel, 1, allocator);
       #endif
+
+      // allocate native memory for a single integer
+      _valueHolder = (int*)UnsafeUtility.Malloc(UnsafeUtility.SizeOf<int>(), UnsafeUtility.AlignOf<int>(), allocator);
+      _allocatorLabel = allocator;
+
       // initialize the value to 0 to avoid uninitialized data
       Value = 0;
     }

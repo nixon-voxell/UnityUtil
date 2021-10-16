@@ -30,14 +30,14 @@ namespace Voxell.NativeContainers
 
     public NativeIncrementor(Allocator allocator)
     {
-      _allocatorLabel = allocator;
-
       // allocate native memory for a single integer
-      _counter = (int*)UnsafeUtility.Malloc(UnsafeUtility.SizeOf<int>(), 4, allocator);
+      _counter = (int*)UnsafeUtility.Malloc(UnsafeUtility.SizeOf<int>(), UnsafeUtility.AlignOf<int>(), allocator);
+
+      _allocatorLabel = allocator;
 
       // create a dispose sentinel to track memory leaks. This also creates the AtomicSafetyHandle
       #if ENABLE_UNITY_COLLECTIONS_CHECKS
-      DisposeSentinel.Create(out _safety, out _disposeSentinel, 0, _allocatorLabel);
+      DisposeSentinel.Create(out _safety, out _disposeSentinel, 1, _allocatorLabel);
       #endif
       // initialize the count to 0 to avoid uninitialized data
       Count = 0;

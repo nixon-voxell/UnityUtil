@@ -14,11 +14,8 @@ This package is where all the utility functions as well as all the custom inspec
   - [Join the community!](#join-the-community)
   - [License](#license)
   - [References](#references)
-  - [Credits](#credits)
 
 ## Installation
-
-This package depends on:
 
 1. Clone this repository into your project's `Packages` folder.
 2. And you are ready to go!
@@ -135,11 +132,3 @@ See [license file](./LICENSE) for details.
 ## References
 
 - https://github.com/dbrizov/NaughtyAttributes
-
-## Credits
-
-Python Logo by [Jessica Williamson](https://www.behance.net/gallery/96750899/Python-Logo-Redesign)
-
-<a href ="https://discord.gg/WDBnuNH" target="_blank">
-  <img src="Resources/PythonLogo.png" alt="python_logo" width="50px" height="50px"/>
-</a>
