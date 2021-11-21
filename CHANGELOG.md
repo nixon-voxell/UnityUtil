@@ -6,6 +6,9 @@
   - Native Incrementor (atomic incrementation of an int).
   - Native Add (atomic addition of an int).
   - Hillis Steele inclusive sum scan implementation.
+  - mathx:
+    - `approximately_zero` function.
+    - lower case for `long_axis` function.
 
 - Changes
   - Added package dependencies:

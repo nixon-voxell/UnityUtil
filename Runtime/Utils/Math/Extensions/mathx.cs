@@ -36,5 +36,9 @@ namespace Voxell.Mathx
       // We multiply this epsilon by the biggest magnitude of a and b.
       return math.abs(b - a) < math.max(0.000001f * math.max(math.abs(a), math.abs(b)), math.EPSILON * 8);
     }
+
+    /// <summary>Check if number is close to zero.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool approximately_zero(float a) => math.abs(a) < 0.000001f;
   }
 }

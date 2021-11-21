@@ -25,7 +25,7 @@ namespace Voxell.Mathx
   public static class float3_extension
   {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int LongAxis(this float3 v)
+    public static int long_axis(this float3 v)
     {
       int i = 0;
       if (math.abs(v.y) > math.abs(v.x)) i = 1;

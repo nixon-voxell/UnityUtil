@@ -4,9 +4,9 @@ This package is where all the utility functions as well as all the custom inspec
 
 - [Unity Utilities](#unity-utilities)
   - [Installation](#installation)
-  - [Custom Propery Attribute](#custom-propery-attribute)
+  - [Custom Property Attribute](#custom-property-attribute)
   - [Utilities](#utilities)
-    - [MathUtil](#mathutil)
+    - [Mathx](#mathx)
     - [Under the hood](#under-the-hood)
   - [Logging](#logging)
     - [A simple example:](#a-simple-example)
@@ -17,10 +17,10 @@ This package is where all the utility functions as well as all the custom inspec
 
 ## Installation
 
-1. Clone this repository into your project's `Packages` folder.
+1. Clone this repository into your `Packages` folder.
 2. And you are ready to go!
 
-## Custom Propery Attribute
+## Custom Property Attribute
 
 ```cs
 using UnityEngine;
@@ -51,7 +51,7 @@ public class CustomInspectorTest : MonoBehaviour
 
 ## Utilities
 
-### MathUtil
+### Mathx
 
 ```cs
 using UnityEngine;
@@ -125,7 +125,7 @@ public class LoggingTest : MonoBehaviour
 
 ## License
 
-This repository as a whole is licensed under the GNU Public License, Version 3. Individual files may have a different, but compatible license.
+This repository as a whole is licensed under the Apache License 2.0. Individual files may have a different, but compatible license.
 
 See [license file](./LICENSE) for details.
 
