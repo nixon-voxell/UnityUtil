@@ -1,5 +1,3 @@
-// This program is not Copyright to Voxell Technologies but instead to: https://github.com/dbrizov/NaughtyAttributes
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
