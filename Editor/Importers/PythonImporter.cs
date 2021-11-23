@@ -8,8 +8,8 @@ namespace Voxell.PythonVX
   {
     public override void OnImportAsset(AssetImportContext ctx)
     {
-      TextAsset pythonAsset = new TextAsset(FileUtil.ReadAssetFileText(ctx.assetPath));
-      pythonAsset.name = FileUtil.GetFilename(ctx.assetPath);
+      TextAsset pythonAsset = new TextAsset(FileUtilx.ReadAssetFileText(ctx.assetPath));
+      pythonAsset.name = FileUtilx.GetFilename(ctx.assetPath);
       ctx.AddObjectToAsset("pythonAsset", pythonAsset, Resources.Load<Texture2D>("PythonLogo"));
       ctx.SetMainObject(pythonAsset);
     }

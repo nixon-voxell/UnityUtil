@@ -6,16 +6,17 @@ This package is where all the utility functions as well as all the custom inspec
   - [Installation](#installation)
   - [Custom Property Attribute](#custom-property-attribute)
   - [Utilities](#utilities)
-    - [Mathx](#mathx)
+    - [MathUtil](#mathutil)
     - [Under the hood](#under-the-hood)
   - [Logging](#logging)
-    - [A simple example:](#a-simple-example)
   - [Support the project!](#support-the-project)
   - [Join the community!](#join-the-community)
   - [License](#license)
   - [References](#references)
 
 ## Installation
+
+There are no external dependencies for this package.
 
 1. Clone this repository into your `Packages` folder.
 2. And you are ready to go!
@@ -51,11 +52,11 @@ public class CustomInspectorTest : MonoBehaviour
 
 ## Utilities
 
-### Mathx
+### MathUtil
 
 ```cs
 using UnityEngine;
-using Voxell.Mathx;
+using Voxell.MathUtil;
 
 // generate array [0, 1, 2, 3, 4]
 int[] shuffledArray = GenerateSeqArray(5);
@@ -90,7 +91,6 @@ Debug.Log(shuffledArray);
 
 ## Logging
 
-### A simple example:
 ```cs
 using UnityEngine;
 using Voxell;

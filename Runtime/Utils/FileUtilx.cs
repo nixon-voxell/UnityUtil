@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Voxell
 {
-  public static class FileUtil
+  public static class FileUtilx
   {
-    public static string projectPath
-    { get => Application.dataPath.Substring(0, Application.dataPath.Length-6); }
+    public static readonly string projectPath = Application.dataPath.Substring(0, Application.dataPath.Length-6);
 
     /// <summary>
     /// Get the path of the folder given a file path by excluding the filename
