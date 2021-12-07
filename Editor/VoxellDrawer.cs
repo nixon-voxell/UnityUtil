@@ -67,6 +67,8 @@ namespace Voxell.Inspector
           {
             string filePath = EditorUtility.OpenFilePanel("Asset File", Application.streamingAssetsPath, "");
             if (filePath != "") property.stringValue = filePath.Substring(Application.streamingAssetsPath.Length+1);
+            property.serializedObject.ApplyModifiedProperties();
+            GUIUtility.ExitGUI();
           }
           Rect assetLabelRect = new Rect(new Vector2(rect.x + 22.0f, rect.y), new Vector2(116.0f, rect.size.y));
           EditorGUI.LabelField(assetLabelRect, "StreamingAssets/");
@@ -99,6 +101,8 @@ namespace Voxell.Inspector
           {
             string filePath = EditorUtility.OpenFolderPanel("Asset Folder", Application.streamingAssetsPath, "");
             if (filePath != "") property.stringValue = filePath.Substring(Application.streamingAssetsPath.Length+1);
+            property.serializedObject.ApplyModifiedProperties();
+            GUIUtility.ExitGUI();
           }
           Rect assetLabelRect = new Rect(new Vector2(rect.x + 22.0f, rect.y), new Vector2(116.0f, rect.size.y));
           EditorGUI.LabelField(assetLabelRect, "StreamingAssets/");

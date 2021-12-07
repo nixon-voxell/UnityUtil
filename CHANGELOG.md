@@ -16,6 +16,7 @@
 - Added package dependencies:
   - "com.unity.jobs": "0.11.0-preview.6"
   - "com.unity.burst": "1.5.5"
+- Fixed `StreamingAssetFilePath` and `StreamingAssetFolderPath` stack error when opening file explorer.
 
 ### Bug Fixes
 
