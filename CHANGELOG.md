@@ -21,6 +21,7 @@
 ### Bug Fixes
 
 - Fixed Bug: Mesh Info tool throws error when mesh filter or skinned mesh rendere has no mesh/missing mesh.
+- Hillis Steele inclusive sum scan does not include first element.
 
 ## [1.2.0]
 
