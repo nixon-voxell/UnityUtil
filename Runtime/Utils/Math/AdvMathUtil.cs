@@ -23,14 +23,14 @@ namespace Voxell.Mathx
     {
       point *= 1024.0f;
       point = math.clamp(point, 0.0f, 1023.0f);
-      uint xx = expandBits((uint)point.x);
-      uint yy = expandBits((uint)point.y);
-      uint zz = expandBits((uint)point.z);
+      uint xx = ExpandBits((uint)point.x);
+      uint yy = ExpandBits((uint)point.y);
+      uint zz = ExpandBits((uint)point.z);
       return xx * 4 + yy * 2 + zz;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint expandBits(uint v)
+    public static uint ExpandBits(uint v)
     {
       v = (v * 0x00010001u) & 0xFF0000FFu;
       v = (v * 0x00000101u) & 0x0F00F00Fu;

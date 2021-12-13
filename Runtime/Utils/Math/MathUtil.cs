@@ -21,7 +21,9 @@ namespace Voxell.Mathx
     /// <summary>Convert float3 point location to int3 grid location.</summary>
     /// <param name="p">point</param>
     /// <param name="unitSize">unit size</param>
-    /// <returns></returns>
+    /// <remarks>
+    /// Point location should always be positive in all axis to obtain accurate grid location.
+    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int3 PointToGrid(float3 p, float unitSize) => new int3(p / unitSize);
 

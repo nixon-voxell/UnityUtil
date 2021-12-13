@@ -2,11 +2,14 @@
 
 ### New Features
 
-- Job Utilities (common parallel algorithm implementation).
-- ReverseArrayJob: Reverse native array in parallel.
-- Native Incrementor (atomic incrementation of an int).
-- Native Add (atomic addition of an int).
-- Hillis Steele inclusive sum scan implementation.
+- Jobx
+  - Job Utilities (common parallel algorithm implementation).
+  - ReverseJob: Reverse native array in parallel.
+  - Hillis Steele inclusive sum scan implementation.
+  - Radix Sort (LSB)
+- Native Containers
+  - Native Incrementor (atomic incrementation of an int).
+  - Native Add (atomic addition of an int).
 - mathx:
   - `approximately_zero` function.
   - lower case for `long_axis` function.
@@ -29,7 +32,7 @@
 
 ### New Features
 
-- New tool: Mesh Info [EditorWindow]
+- New tool: Mesh Info (EditorWindow)
   - Under *Tools/Voxell/Mesh Info*
   - Shows mesh stats based on the GameObject/Prefab you select.
   - Recursively search for children objects inside the GameObject/Prefab for MeshFilter and SkinnedMeshRenderer.
