@@ -10,6 +10,7 @@
 - mathx:
   - `approximately_zero` function.
   - lower case for `long_axis` function.
+- directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.)
 
 ### Changes
 
@@ -17,6 +18,7 @@
   - "com.unity.jobs": "0.11.0-preview.6"
   - "com.unity.burst": "1.5.5"
 - Fixed `StreamingAssetFilePath` and `StreamingAssetFolderPath` stack error when opening file explorer.
+- Renamed `float2_extension` and `float3_extension` to `float2x` and `float3x`.
 
 ### Bug Fixes
 
