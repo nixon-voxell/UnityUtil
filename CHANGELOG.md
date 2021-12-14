@@ -6,6 +6,7 @@
   - Job Utilities (common parallel algorithm implementation).
   - ReverseJob: Reverse native array in parallel.
   - Hillis Steele inclusive sum scan implementation.
+  - Hillis Steele inclusive min/max scan implementation.
   - Radix Sort (LSB)
 - Native Containers
   - Native Incrementor (atomic incrementation of an int).

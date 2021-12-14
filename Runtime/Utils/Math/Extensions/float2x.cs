@@ -18,9 +18,6 @@ namespace Voxell.Mathx
     /// <summary>Shorthand for writing float2(0, -1).</summary>
     public static readonly float2 down = new float2(0.0f, -1.0f);
 
-    /// <summary>Shorthand for writing float2(1, 1).</summary>
-    public static readonly float2 one = new float2(1.0f, 1.0f);
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float2 perpendicular(this float2 vector) => new float2(-vector.y, vector.x);
 

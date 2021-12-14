@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
@@ -10,25 +9,25 @@ namespace Voxell.Jobx
     [BurstCompile]
     private struct ReverseArrayJob<T> : IJobParallelFor where T : struct
     {
-      private NativeArray<T> na_array;
-      private int _arraySize;
+      public int arraySize;
+
+      public NativeArray<T> na_array;
 
       public ReverseArrayJob(ref NativeArray<T> na_array, int arraySize)
       {
         this.na_array = na_array;
-        _arraySize = arraySize;
+        this.arraySize = arraySize;
       }
 
       public void Execute(int index)
       {
         T elem = na_array[index];
-        na_array[index] = na_array[_arraySize - index];
-        na_array[_arraySize - index] = elem;
+        na_array[index] = na_array[arraySize - index];
+        na_array[arraySize - index] = elem;
       }
     }
 
     /// <summary>Reverse native array in parallel.</summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ReverseArray<T>(NativeArray<T> na_array) where T : struct
     {
       int arraySize = na_array.Length;

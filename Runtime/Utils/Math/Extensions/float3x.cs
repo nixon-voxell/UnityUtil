@@ -22,8 +22,5 @@ namespace Voxell.Mathx
 
     /// <summary>Shorthand for writing float3(0, -1, 0).</summary>
     public static readonly float3 down = new float3(0.0f, -1.0f, 0.0f);
-
-    /// <summary>Shorthand for writing float3(1, 1, 1).</summary>
-    public static readonly float3 one = new float3(1.0f, 1.0f, 1.0f);
   }
 }
