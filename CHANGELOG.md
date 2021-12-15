@@ -2,12 +2,11 @@
 
 ### New Features
 
-- Jobx
-  - Job Utilities (common parallel algorithm implementation).
+- Jobx (parallel computation primitives)
   - ReverseJob: Reverse native array in parallel.
   - Hillis Steele inclusive sum scan implementation.
   - Hillis Steele inclusive min/max scan implementation.
-  - Radix Sort (LSB)
+  - Radix Sort (LSB) implementation.
 - Native Containers
   - Native Increment (atomic incrementation of an int).
   - Native Add (atomic addition of an int).
@@ -28,7 +27,7 @@
 
 ### Bug Fixes
 
-- Fixed Bug: Mesh Info tool throws error when mesh filter or skinned mesh rendere has no mesh/missing mesh.
+- Fixed Bug: Mesh Info tool throws error when mesh filter or skinned mesh renderer has no mesh/missing mesh.
 - Hillis Steele inclusive sum scan does not include first element.
 
 ## [1.2.0]
