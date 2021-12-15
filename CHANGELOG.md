@@ -2,14 +2,20 @@
 
 ### New Features
 
-- Job Utilities (common parallel algorithm implementation).
-- ReverseArrayJob: Reverse native array in parallel.
-- Native Incrementor (atomic incrementation of an int).
-- Native Add (atomic addition of an int).
-- Hillis Steele inclusive sum scan implementation.
+- Jobx (parallel computation primitives)
+  - ReverseJob: Reverse native array in parallel.
+  - Hillis Steele inclusive sum scan implementation.
+  - Hillis Steele inclusive min/max scan implementation.
+  - Radix Sort (LSB) implementation.
+- Native Containers
+  - Native Increment (atomic incrementation of an int).
+  - Native Add (atomic addition of an int).
+  - Native Exchange (atomic exchange of an int).
 - mathx:
   - `approximately_zero` function.
   - lower case for `long_axis` function.
+- directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.)
+- Created unit tests for `Jobx` and `NativeContainers`.
 
 ### Changes
 
@@ -17,16 +23,18 @@
   - "com.unity.jobs": "0.11.0-preview.6"
   - "com.unity.burst": "1.5.5"
 - Fixed `StreamingAssetFilePath` and `StreamingAssetFolderPath` stack error when opening file explorer.
+- Renamed `float2_extension` and `float3_extension` to `float2x` and `float3x`.
 
 ### Bug Fixes
 
-- Fixed Bug: Mesh Info tool throws error when mesh filter or skinned mesh rendere has no mesh/missing mesh.
+- Fixed Bug: Mesh Info tool throws error when mesh filter or skinned mesh renderer has no mesh/missing mesh.
+- Hillis Steele inclusive sum scan does not include first element.
 
 ## [1.2.0]
 
 ### New Features
 
-- New tool: Mesh Info [EditorWindow]
+- New tool: Mesh Info (EditorWindow)
   - Under *Tools/Voxell/Mesh Info*
   - Shows mesh stats based on the GameObject/Prefab you select.
   - Recursively search for children objects inside the GameObject/Prefab for MeshFilter and SkinnedMeshRenderer.

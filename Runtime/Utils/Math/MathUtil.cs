@@ -5,16 +5,27 @@ namespace Voxell.Mathx
 {
   public static class MathUtil
   {
-    /// <summary>
-    /// Calculate the least amount of split from the total size given a split size
-    /// </summary>
-    /// <param name="totalSize">total amount of size available</param>
-    /// <param name="splitSize">maximum size of each divisions after the split</param>
-    /// <returns></returns>
+    /// <summary>Calculate the least amount of groups needed based on thread count.</summary>
+    /// <param name="threadCount">total amount of size available</param>
+    /// <param name="grpSize">maximum size of each divisions after the split</param>
+    /// <returns>Group count.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int CalculateGrids(int totalSize, int splitSize) => (totalSize + splitSize - 1) / splitSize;
+    public static int CalculateGrids(int threadCount, int grpSize) => (threadCount + grpSize - 1) / grpSize;
+    /// <summary>Calculate the least amount of groups needed based on thread count.</summary>
+    /// <param name="threadCount">total amount of size available</param>
+    /// <param name="grpSize">maximum size of each divisions after the split</param>
+    /// <returns>Group count.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int CalculateGrids(uint totalThreads, uint grpSize) => (int)((totalThreads + grpSize - 1) / grpSize);
+    public static int CalculateGrids(uint threadCount, uint grpSize) => (int)((threadCount + grpSize - 1) / grpSize);
+
+    /// <summary>Convert float3 point location to int3 grid location.</summary>
+    /// <param name="p">point</param>
+    /// <param name="unitSize">unit size</param>
+    /// <remarks>
+    /// Point location should always be positive in all axis to obtain accurate grid location.
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int3 PointToGrid(float3 p, float unitSize) => new int3(p / unitSize);
 
     /// <summary>
     /// Set all values in that array to the given value
@@ -35,9 +46,7 @@ namespace Voxell.Mathx
       return array;
     }
 
-    /// <summary>
-    /// Shuffles an array
-    /// </summary>
+    /// <summary>Shuffles an array.</summary>
     public static void ShuffleArray<T>(ref T[] decklist, uint seed=1)
     {
       // make sure seed is not 0
