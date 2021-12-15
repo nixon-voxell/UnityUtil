@@ -56,9 +56,9 @@ namespace Voxell.Jobx
       public int lastFalseIdx;
 
       public NativeArray<uint> na_values;
-      public NativeArray<uint> na_sortedValues;
+      [NativeDisableParallelForRestriction] public NativeArray<uint> na_sortedValues;
       public NativeArray<int> na_indices;
-      public NativeArray<int> na_sortedIndices;
+      [NativeDisableParallelForRestriction] public NativeArray<int> na_sortedIndices;
       // true if current bit is 1
       public NativeArray<bool> na_bit;
       public NativeArray<int> na_truePrefixSum;

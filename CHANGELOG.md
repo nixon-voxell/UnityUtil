@@ -9,12 +9,14 @@
   - Hillis Steele inclusive min/max scan implementation.
   - Radix Sort (LSB)
 - Native Containers
-  - Native Incrementor (atomic incrementation of an int).
+  - Native Increment (atomic incrementation of an int).
   - Native Add (atomic addition of an int).
+  - Native Exchange (atomic exchange of an int).
 - mathx:
   - `approximately_zero` function.
   - lower case for `long_axis` function.
 - directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.)
+- Created unit tests for `Jobx` and `NativeContainers`.
 
 ### Changes
 

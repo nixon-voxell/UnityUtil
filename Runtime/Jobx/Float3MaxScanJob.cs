@@ -34,7 +34,7 @@ namespace Voxell.Jobx
     }
 
     /// <summary>Perform a Hillis Steele inclusive max scan.</summary>
-    public static void InclusiveMaxScan(NativeArray<float3> na_values)
+    public static void InclusiveFloat3MaxScan(NativeArray<float3> na_values)
     {
       int valueCount = na_values.Length;
       JobHandle jobHandle;
