@@ -8,24 +8,15 @@ namespace Voxell.NativeContainers
   [StructLayout(LayoutKind.Sequential), NativeContainer, NativeContainerIsAtomicWriteOnly]
   unsafe public struct NativeIncrement : System.IDisposable
   {
-    // the actual pointer to the allocated count needs to have restrictions relaxed
-    // so jobs can be schedled with this container
+    public bool IsCreated => _counter != null;
+
     [NativeDisableUnsafePtrRestriction] private int* _counter;
 
     #if ENABLE_UNITY_COLLECTIONS_CHECKS
     private AtomicSafetyHandle m_Safety;
-    /*
-    the dispose sentinel tracks memory leaks, it is a managed type so it is cleared to null when scheduling a job
-    the job cannot dispose the container, and no one else can dispose it until the job has run,
-    so it is ok to not pass it along
-    this attribute is required, without it this NativeContainer cannot be passed to a job
-    since that would give the job access to a managed object
-    */
-    [NativeSetClassTypeToNullOnSchedule]
-    private DisposeSentinel _disposeSentinel;
+    [NativeSetClassTypeToNullOnSchedule] private DisposeSentinel _disposeSentinel;
     #endif
 
-    // Keep track of where the memory for this was allocated
     private Allocator _allocatorLabel;
 
     public NativeIncrement(Allocator allocator)
@@ -42,15 +33,6 @@ namespace Voxell.NativeContainers
       Count = 0;
     }
 
-    public void Increment()
-    {
-      // verify that the caller has write permission on this data
-      #if ENABLE_UNITY_COLLECTIONS_CHECKS
-      AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
-      #endif
-      Interlocked.Increment(ref *_counter);
-    }
-
     public int Count
     {
       get
@@ -61,6 +43,8 @@ namespace Voxell.NativeContainers
         #endif
         return *_counter;
       }
+
+      [WriteAccessRequired]
       set
       {
         // verify that the caller has write permission on this data
@@ -71,7 +55,15 @@ namespace Voxell.NativeContainers
       }
     }
 
-    public bool IsCreated => _counter != null;
+    [WriteAccessRequired]
+    public void Increment()
+    {
+      // verify that the caller has write permission on this data
+      #if ENABLE_UNITY_COLLECTIONS_CHECKS
+      AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
+      #endif
+      Interlocked.Increment(ref *_counter);
+    }
 
     public void Dispose()
     {

@@ -115,5 +115,66 @@ namespace Voxell.NativeContainers
         na_exchangedIndices[index] = initialValue;
       }
     }
+
+    [Test]
+    public void AtomicExchangeArray()
+    {
+      JobHandle jobHandle;
+      int[] seqArray = MathUtil.GenerateSeqArray(LOOP_SIZE);
+      bool[] seqCheck = new bool[LOOP_SIZE];
+      for (int i=0; i < LOOP_SIZE; i++) seqCheck[i] = false;
+      int totalTests = 5;
+
+      NativeExchangeArray nativeExchangeArray = new NativeExchangeArray(totalTests, Allocator.TempJob);
+      for (int t=0; t < totalTests; t++) nativeExchangeArray[t] = 0;
+      NativeArray<int> na_indices = new NativeArray<int>(LOOP_SIZE, Allocator.TempJob);
+      NativeArray<int> na_exchangedIndices = new NativeArray<int>(LOOP_SIZE, Allocator.TempJob);
+
+      AtomicExchangeArrayJob atomicExchangeJob = new AtomicExchangeArrayJob
+      {
+        nativeExchangeArray = nativeExchangeArray,
+        na_indices = na_indices,
+        na_exchangedIndices = na_exchangedIndices
+      };
+
+      for (int t=0; t < totalTests; t++)
+      {
+        na_indices.CopyFrom(seqArray);
+        atomicExchangeJob.testIdx = t;
+        jobHandle = atomicExchangeJob.Schedule(LOOP_SIZE, BATCH_SIZE);
+        jobHandle.Complete();
+
+        for (int i=0; i < LOOP_SIZE; i++)
+        {
+          // assign true to whichever exchange index it get
+          seqCheck[na_exchangedIndices[i]] = true;
+        }
+        // lastly, we account for the last exchanged value
+        seqCheck[nativeExchangeArray[t]] = true;
+
+        // check if all indices has been successfully exchanged
+        for (int i=0; i < LOOP_SIZE; i++)
+          Assert.True(seqCheck[i]);
+      }
+
+      nativeExchangeArray.Dispose();
+      na_indices.Dispose();
+      na_exchangedIndices.Dispose();
+    }
+
+    [BurstCompile(CompileSynchronously = true)]
+    private struct AtomicExchangeArrayJob : IJobParallelFor
+    {
+      public int testIdx;
+      public NativeExchangeArray nativeExchangeArray;
+      public NativeArray<int> na_indices;
+      public NativeArray<int> na_exchangedIndices;
+
+      public void Execute(int index)
+      {
+        int initialValue = nativeExchangeArray.AtomicExchange(testIdx, index);
+        na_exchangedIndices[index] = initialValue;
+      }
+    }
   }
 }

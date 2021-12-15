@@ -1,3 +1,10 @@
+## [1.4.0]
+
+### New Features
+
+- Native Containers
+  - Native Exchange Array (atomic exchange if an array of int).
+
 ## [1.3.0]
 
 ### New Features
@@ -14,7 +21,7 @@
 - mathx:
   - `approximately_zero` function.
   - lower case for `long_axis` function.
-- directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.)
+- directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.).
 - Created unit tests for `Jobx` and `NativeContainers`.
 
 ### Changes
