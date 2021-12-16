@@ -5,14 +5,13 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public static partial class Jobx
+  public partial class Jobx
   {
     [BurstCompile(CompileSynchronously = true)]
     private struct HillisSteeleFloat3MaxScanJob : IJobParallelFor
     {
       public int offset;
 
-      [NativeDisableParallelForRestriction]
       public NativeArray<float3> na_values;
       [NativeDisableParallelForRestriction, ReadOnly]
       public NativeArray<float3> na_prevValues;

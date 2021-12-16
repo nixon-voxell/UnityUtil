@@ -4,7 +4,7 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public static partial class Jobx
+  public partial class Jobx
   {
     /// <summary>Inclusive Hillis Steele sum scan.</summary>
     [BurstCompile(CompileSynchronously = true)]
@@ -12,7 +12,6 @@ namespace Voxell.Jobx
     {
       public int offset;
 
-      [NativeDisableParallelForRestriction]
       public NativeArray<int> na_array;
       [NativeDisableParallelForRestriction, ReadOnly]
       public NativeArray<int> na_prevArray;

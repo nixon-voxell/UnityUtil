@@ -9,6 +9,7 @@ namespace Voxell.Jobx
   public class JobxTests
   {
     private const int ARRAY_COUNT = 1000;
+
     [Test]
     public void SumScan()
     {

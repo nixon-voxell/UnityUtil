@@ -3,7 +3,11 @@
 ### New Features
 
 - Native Containers
-  - Native Exchange Array (atomic exchange if an array of int).
+  - Native Exchange Array (atomic exchange of an array of int).
+
+### Changes
+
+- Added `ReadOnly` and `WriteOnly` tags to native arrays on `Jobx` where neccessary.
 
 ## [1.3.0]
 

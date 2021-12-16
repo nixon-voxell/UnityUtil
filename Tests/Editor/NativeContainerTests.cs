@@ -10,6 +10,7 @@ namespace Voxell.NativeContainers
   {
     private const int BATCH_SIZE = 16;
     private const int LOOP_SIZE = BATCH_SIZE*8;
+
     [Test]
     public void AtomicIncrement()
     {
@@ -126,6 +127,7 @@ namespace Voxell.NativeContainers
       int totalTests = 5;
 
       NativeExchangeArray nativeExchangeArray = new NativeExchangeArray(totalTests, Allocator.TempJob);
+      Assert.AreEqual(nativeExchangeArray.Length, totalTests);
       for (int t=0; t < totalTests; t++) nativeExchangeArray[t] = 0;
       NativeArray<int> na_indices = new NativeArray<int>(LOOP_SIZE, Allocator.TempJob);
       NativeArray<int> na_exchangedIndices = new NativeArray<int>(LOOP_SIZE, Allocator.TempJob);

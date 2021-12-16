@@ -5,18 +5,18 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public static partial class Jobx
+  public partial class Jobx
   {
     [BurstCompile(CompileSynchronously = true)]
     private struct RadixBitCheckJob : IJobParallelFor
     {
       public uint mask;
 
-      public NativeArray<uint> na_values;
+      [ReadOnly] public NativeArray<uint> na_values;
       // true if current bit is 1
-      public NativeArray<bool> na_bit;
-      public NativeArray<int> na_truePrefixSum;
-      public NativeArray<int> na_falsePrefixSum;
+      [WriteOnly] public NativeArray<bool> na_bit;
+      [WriteOnly] public NativeArray<int> na_truePrefixSum;
+      [WriteOnly] public NativeArray<int> na_falsePrefixSum;
 
       public RadixBitCheckJob(
         ref NativeArray<uint> na_values,
@@ -55,14 +55,14 @@ namespace Voxell.Jobx
     {
       public int lastFalseIdx;
 
-      public NativeArray<uint> na_values;
-      [NativeDisableParallelForRestriction] public NativeArray<uint> na_sortedValues;
-      public NativeArray<int> na_indices;
-      [NativeDisableParallelForRestriction] public NativeArray<int> na_sortedIndices;
+      [ReadOnly] public NativeArray<uint> na_values;
+      [NativeDisableParallelForRestriction, WriteOnly] public NativeArray<uint> na_sortedValues;
+      [ReadOnly] public NativeArray<int> na_indices;
+      [NativeDisableParallelForRestriction, WriteOnly] public NativeArray<int> na_sortedIndices;
       // true if current bit is 1
-      public NativeArray<bool> na_bit;
-      public NativeArray<int> na_truePrefixSum;
-      public NativeArray<int> na_falsePrefixSum;
+      [ReadOnly] public NativeArray<bool> na_bit;
+      [ReadOnly] public NativeArray<int> na_truePrefixSum;
+      [ReadOnly] public NativeArray<int> na_falsePrefixSum;
 
       public RadixSortShuffleJob(
         ref NativeArray<uint> na_values,

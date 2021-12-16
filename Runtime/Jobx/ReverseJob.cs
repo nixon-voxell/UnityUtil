@@ -4,14 +4,14 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public static partial class Jobx
+  public partial class Jobx
   {
     [BurstCompile]
     private struct ReverseArrayJob<T> : IJobParallelFor where T : struct
     {
       public int arraySize;
 
-      public NativeArray<T> na_array;
+      [NativeDisableParallelForRestriction] public NativeArray<T> na_array;
 
       public ReverseArrayJob(ref NativeArray<T> na_array, int arraySize)
       {
