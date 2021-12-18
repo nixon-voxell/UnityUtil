@@ -1,3 +1,4 @@
+using UnityEngine.Profiling;
 using Unity.Mathematics;
 using Unity.Collections;
 using Unity.Jobs;
@@ -5,8 +6,39 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public partial class Jobx
+  public sealed class Float3MaxScanJob : Jobx, System.IDisposable
   {
+    private int _valueCount;
+    private NativeArray<float3> na_values;
+    private NativeArray<float3> na_prevValues;
+    private HillisSteeleFloat3MaxScanJob maxScanJob;
+
+    public Float3MaxScanJob(ref NativeArray<float3> na_values)
+    {
+      this._valueCount = na_values.Length;
+      this.na_values = na_values;
+      this.na_prevValues = new NativeArray<float3>(na_values, Allocator.Persistent);
+
+      this.maxScanJob = new HillisSteeleFloat3MaxScanJob(
+        ref na_values, ref na_prevValues
+      );
+    }
+
+    /// <summary>Perform a Hillis Steele inclusive max scan.</summary>
+    public void InclusiveMaxScan()
+    {
+      Profiler.BeginSample("InclusiveMaxScan");
+      JobHandle jobHandle;
+      for (int offset=1; offset < _valueCount; offset <<= 1)
+      {
+        na_prevValues.CopyFrom(na_values);
+        maxScanJob.offset = offset;
+        jobHandle = maxScanJob.Schedule(_valueCount, XL_BATCH_SIZE);
+        jobHandle.Complete();
+      }
+      Profiler.EndSample();
+    }
+
     [BurstCompile(CompileSynchronously = true)]
     private struct HillisSteeleFloat3MaxScanJob : IJobParallelFor
     {
@@ -32,26 +64,6 @@ namespace Voxell.Jobx
       }
     }
 
-    /// <summary>Perform a Hillis Steele inclusive max scan.</summary>
-    public static void InclusiveFloat3MaxScan(NativeArray<float3> na_values)
-    {
-      int valueCount = na_values.Length;
-      JobHandle jobHandle;
-
-      NativeArray<float3> na_prevValues = new NativeArray<float3>(na_values, Allocator.TempJob);
-      HillisSteeleFloat3MaxScanJob maxScanJob = new HillisSteeleFloat3MaxScanJob(
-        ref na_values, ref na_prevValues
-      );
-
-      for (int offset=1; offset < valueCount; offset <<= 1)
-      {
-        maxScanJob.offset = offset;
-        jobHandle = maxScanJob.Schedule(valueCount, M_BATCH_SIZE);
-        jobHandle.Complete();
-        na_prevValues.CopyFrom(na_values);
-      }
-
-      na_prevValues.Dispose();
-    }
+    public void Dispose() => na_prevValues.Dispose();
   }
 }

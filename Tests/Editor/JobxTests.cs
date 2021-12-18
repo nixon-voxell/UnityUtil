@@ -1,11 +1,12 @@
 using Unity.Mathematics;
 using Unity.Collections;
 using NUnit.Framework;
-using Voxell.Mathx;
 using Random = UnityEngine.Random;
 
 namespace Voxell.Jobx
 {
+  using Mathx;
+
   public class JobxTests
   {
     private const int ARRAY_COUNT = 1000;
@@ -17,7 +18,8 @@ namespace Voxell.Jobx
       for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomInt();
 
       NativeArray<int> na_array = new NativeArray<int>(array, Allocator.TempJob);
-      Jobx.InclusiveSumScan(na_array);
+      SumScanJob sumScanJob = new SumScanJob(ref na_array);
+      sumScanJob.InclusiveSumScan();
 
       int sum = 0;
       for (int i=0; i < ARRAY_COUNT; i++)
@@ -27,6 +29,7 @@ namespace Voxell.Jobx
       }
 
       na_array.Dispose();
+      sumScanJob.Dispose();
     }
 
     [Test]
@@ -36,7 +39,8 @@ namespace Voxell.Jobx
       for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomFloat3();
 
       NativeArray<float3> na_array = new NativeArray<float3>(array, Allocator.TempJob);
-      Jobx.InclusiveFloat3MinScan(na_array);
+      Float3MinScanJob float3MinScanJob = new Float3MinScanJob(ref na_array);
+      float3MinScanJob.InclusiveMinScan();
 
       float3 float3Max = array[0];
       for (int i=0; i < ARRAY_COUNT; i++)
@@ -46,6 +50,7 @@ namespace Voxell.Jobx
       }
 
       na_array.Dispose();
+      float3MinScanJob.Dispose();
     }
 
     [Test]
@@ -55,7 +60,8 @@ namespace Voxell.Jobx
       for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomFloat3();
 
       NativeArray<float3> na_array = new NativeArray<float3>(array, Allocator.TempJob);
-      Jobx.InclusiveFloat3MaxScan(na_array);
+      Float3MaxScanJob float3MaxScanJob = new Float3MaxScanJob(ref na_array);
+      float3MaxScanJob.InclusiveMaxScan();
 
       float3 float3Max = array[0];
       for (int i=0; i < ARRAY_COUNT; i++)
@@ -65,6 +71,7 @@ namespace Voxell.Jobx
       }
 
       na_array.Dispose();
+      float3MaxScanJob.Dispose();
     }
 
     [Test]
@@ -76,7 +83,8 @@ namespace Voxell.Jobx
 
       NativeArray<uint> na_values = new NativeArray<uint>(array, Allocator.TempJob);
       NativeArray<int> na_indices = new NativeArray<int>(indices, Allocator.TempJob);
-      Jobx.RadixSort(na_values, na_indices);
+      RadixSortJob radixSortJob = new RadixSortJob(ref na_values, ref na_indices);
+      radixSortJob.Sort();
 
       // check if sorting works
       for (int i=0; i < ARRAY_COUNT-1; i++)
@@ -87,6 +95,7 @@ namespace Voxell.Jobx
 
       na_values.Dispose();
       na_indices.Dispose();
+      radixSortJob.Dispose();
     }
 
     private float3 GenerateRandomFloat3() => Random.insideUnitSphere * Random.Range(0.0f, 100.0f);

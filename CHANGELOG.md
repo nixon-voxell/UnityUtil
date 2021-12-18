@@ -8,6 +8,8 @@
 ### Changes
 
 - Added `ReadOnly` and `WriteOnly` tags to native arrays on `Jobx` where neccessary.
+- Improved performance of `Min/Max/Sum Scan` by increasing the batch size.
+- Prevent the allocation of new array everytime a new scan/sort is needed by caching it during initialization.
 
 ## [1.3.0]
 

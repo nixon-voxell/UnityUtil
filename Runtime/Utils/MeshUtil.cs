@@ -6,12 +6,10 @@ namespace Voxell
 {
   public static class MeshUtil
   {
-    /// <summary>
-    /// Creates a deep copy of a mesh
-    /// </summary>
+    /// <summary>Creates a deep copy of a mesh.</summary>
     /// <param name="originMesh">source of mesh to copy from</param>
     /// <param name="newMesh">location of copied mesh</param>
-    public static void DeepCopyMesh(ref Mesh originMesh, out Mesh newMesh)
+    public static void DeepCopyMesh(in Mesh originMesh, out Mesh newMesh)
     {
       newMesh = new Mesh();
       newMesh.vertices = originMesh.vertices;
@@ -22,45 +20,43 @@ namespace Voxell
       newMesh.tangents = originMesh.tangents;
     }
 
-    /// <summary>
-    /// Get native array of mesh vertices
-    /// </summary>
+    /// <summary>Get native array of mesh vertices.</summary>
     /// <param name="meshData">mesh data</param>
     /// <param name="allocator">allocation type</param>
-    /// <returns></returns>
-    public static NativeArray<float3> NativeGetVertices(in Mesh.MeshData meshData, Allocator allocator)
+    public static void NativeGetVertices(
+      in Mesh.MeshData meshData,
+      out NativeArray<float3> na_vertices, Allocator allocator
+    )
     {
       int vertexCount = meshData.vertexCount;
-      var vertices = new NativeArray<float3>(vertexCount, allocator);
-      meshData.GetVertices(vertices.Reinterpret<Vector3>());
-      return vertices;
+      NativeArray<Vector3> na_verticesVec3 = new NativeArray<Vector3>(vertexCount, allocator);
+      meshData.GetVertices(na_verticesVec3);
+      na_vertices = na_verticesVec3.Reinterpret<float3>();
     }
 
-    /// <summary>
-    /// Get native array of mesh normals
-    /// </summary>
+    /// <summary>Get native array of mesh normals.</summary>
     /// <param name="meshData">mesh data</param>
     /// <param name="allocator">allocation type</param>
-    /// <returns></returns>
-    public static NativeArray<float3> NativeGetNormals(in Mesh.MeshData meshData, Allocator allocator)
+    public static void NativeGetNormals(
+      in Mesh.MeshData meshData,
+      out NativeArray<float3> na_normals, Allocator allocator)
     {
       int indexCount = meshData.vertexCount;
-      var normals = new NativeArray<float3>(indexCount, allocator);
-      meshData.GetNormals(normals.Reinterpret<Vector3>());
-      return normals;
+      NativeArray<Vector3> na_normalsVec3 = new NativeArray<Vector3>(indexCount, allocator);
+      meshData.GetNormals(na_normalsVec3);
+      na_normals = na_normalsVec3.Reinterpret<float3>();
     }
     
-    /// <summary>
-    /// Get native array of triangle indices
-    /// </summary>
+    /// <summary>Get native array of triangle indices.</summary>
     /// /// <param name="meshData">mesh data</param>
     /// <param name="allocator">allocation type</param>
-    public static NativeArray<int> NativeGetIndices(in Mesh.MeshData meshData, Allocator allocator, int submesh=0)
+    public static void NativeGetIndices(
+      in Mesh.MeshData meshData,
+      out NativeArray<int> na_triangles, Allocator allocator, int submesh=0)
     {
       int indexCount = meshData.GetSubMesh(submesh).indexCount;
-      var triangles = new NativeArray<int>(indexCount, allocator);
-      meshData.GetIndices(triangles, submesh);
-      return triangles;
+      na_triangles = new NativeArray<int>(indexCount, allocator);
+      meshData.GetIndices(na_triangles, submesh);
     }
 
     public static void SeparateTriangles(

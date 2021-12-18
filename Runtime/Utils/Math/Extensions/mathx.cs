@@ -21,5 +21,9 @@ namespace Voxell.Mathx
     /// <summary>Check if number is close to zero.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool approximately_zero(float a) => math.abs(a) < 0.000001f;
+
+    /// <summary>Inverse lerp.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float3 invlerp(float3 from, float3 to, float3 value) => (value - from) / (to - from);
   }
 }

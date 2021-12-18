@@ -1,12 +1,41 @@
+using UnityEngine.Profiling;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public partial class Jobx
+  public class SumScanJob : Jobx, System.IDisposable
   {
-    /// <summary>Inclusive Hillis Steele sum scan.</summary>
+    private int _arrayLength;
+    private NativeArray<int> na_array;
+    private NativeArray<int> na_prevArray;
+    private HillisSteeleSumScanJob sumScanJob;
+
+    public SumScanJob(ref NativeArray<int> na_array)
+    {
+      this._arrayLength = na_array.Length;
+      this.na_array = na_array;
+      this.na_prevArray = new NativeArray<int>(na_array, Allocator.TempJob);
+      this.sumScanJob = new HillisSteeleSumScanJob(ref na_array, ref na_prevArray);
+    }
+
+    /// <summary>Perform a Hillis Steele inclusive sum scan.</summary>
+    public void InclusiveSumScan()
+    {
+      Profiler.BeginSample("InclusiveSumScan");
+      JobHandle jobHandle;
+
+      for (int offset=1; offset < _arrayLength; offset <<= 1)
+      {
+        na_prevArray.CopyFrom(na_array);
+        sumScanJob.offset = offset;
+        jobHandle = sumScanJob.Schedule(_arrayLength, XL_BATCH_SIZE);
+        jobHandle.Complete();
+      }
+      Profiler.EndSample();
+    }
+
     [BurstCompile(CompileSynchronously = true)]
     private struct HillisSteeleSumScanJob : IJobParallelFor
     {
@@ -30,24 +59,6 @@ namespace Voxell.Jobx
       }
     }
 
-    /// <summary>Perform a Hillis Steele inclusive sum scan.</summary>
-    public static void InclusiveSumScan(NativeArray<int> na_array)
-    {
-      int arrayLength = na_array.Length;
-      JobHandle jobHandle;
-
-      NativeArray<int> na_prevArray = new NativeArray<int>(na_array, Allocator.TempJob);
-      HillisSteeleSumScanJob sumScanJob = new HillisSteeleSumScanJob(ref na_array, ref na_prevArray);
-
-      for (int offset=1; offset < arrayLength; offset <<= 1)
-      {
-        sumScanJob.offset = offset;
-        jobHandle = sumScanJob.Schedule(arrayLength, 64);
-        jobHandle.Complete();
-        na_prevArray.CopyFrom(na_array);
-      }
-
-      na_prevArray.Dispose();
-    }
+    public void Dispose() => na_prevArray.Dispose();
   }
 }
