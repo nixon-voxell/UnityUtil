@@ -4,6 +4,10 @@
 
 - Native Containers
   - Native Exchange Array (atomic exchange of an array of int).
+- Custom Editor Views for UIBuilder
+  - Inspector View
+  - Split View
+- Abstract Editor and Abstract Scriptable Editor.
 
 ### Changes
 

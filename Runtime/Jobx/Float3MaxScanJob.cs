@@ -6,7 +6,7 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public sealed class Float3MaxScanJob : Jobx, System.IDisposable
+  public sealed class Float3MaxScanJob : System.IDisposable
   {
     private int _valueCount;
     private NativeArray<float3> na_values;
@@ -33,7 +33,7 @@ namespace Voxell.Jobx
       {
         na_prevValues.CopyFrom(na_values);
         maxScanJob.offset = offset;
-        jobHandle = maxScanJob.Schedule(_valueCount, XL_BATCH_SIZE);
+        jobHandle = maxScanJob.Schedule(_valueCount, Jobx.XL_BATCH_SIZE);
         jobHandle.Complete();
       }
       Profiler.EndSample();

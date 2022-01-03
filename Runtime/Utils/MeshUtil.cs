@@ -34,6 +34,34 @@ namespace Voxell
       na_vertices = na_verticesVec3.Reinterpret<float3>();
     }
 
+    /// <summary>Get native array of uv coordinates.</summary>
+    /// <param name="meshData">mesh data</param>
+    /// <param name="allocator">allocation type</param>
+    public static void NativeGetUVs(
+      in Mesh.MeshData meshData, int channel,
+      out NativeArray<float2> na_uvs, Allocator allocator
+    )
+    {
+      int vertexCount = meshData.vertexCount;
+      NativeArray<Vector2> na_verticesVec2 = new NativeArray<Vector2>(vertexCount, allocator);
+      meshData.GetUVs(channel, na_verticesVec2);
+      na_uvs = na_verticesVec2.Reinterpret<float2>();
+    }
+
+    /// <summary>Get native array of vertex colors.</summary>
+    /// /// <param name="meshData">mesh data</param>
+    /// <param name="allocator">allocation type</param>
+    public static void NativeGetColors(
+      in Mesh.MeshData meshData,
+      out NativeArray<float4> na_colors, Allocator allocator)
+    {
+      int vertexCount = meshData.vertexCount;
+      NativeArray<Color> na_colorsVec2 = new NativeArray<Color>(vertexCount, allocator);
+      na_colors = new NativeArray<float4>(vertexCount, allocator);
+      meshData.GetColors(na_colorsVec2);
+      na_colors = na_colorsVec2.Reinterpret<float4>();
+    }
+
     /// <summary>Get native array of mesh normals.</summary>
     /// <param name="meshData">mesh data</param>
     /// <param name="allocator">allocation type</param>
@@ -46,7 +74,7 @@ namespace Voxell
       meshData.GetNormals(na_normalsVec3);
       na_normals = na_normalsVec3.Reinterpret<float3>();
     }
-    
+
     /// <summary>Get native array of triangle indices.</summary>
     /// /// <param name="meshData">mesh data</param>
     /// <param name="allocator">allocation type</param>

@@ -5,7 +5,7 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public sealed class RadixSortJob : Jobx, System.IDisposable
+  public sealed class RadixSortJob : System.IDisposable
   {
     public NativeArray<uint> na_values;
     public NativeArray<int> na_indices;
@@ -56,14 +56,14 @@ namespace Voxell.Jobx
       for (int m=0; m < maxShiftWidth; m++)
       {
         radixBitCheckJob.mask = mask;
-        jobHandle = radixBitCheckJob.Schedule(valueCount, XL_BATCH_SIZE);
+        jobHandle = radixBitCheckJob.Schedule(valueCount, Jobx.XL_BATCH_SIZE);
         jobHandle.Complete();
 
         trueSumScanJob.InclusiveSumScan();
         falseSumScanJob.InclusiveSumScan();
         radixSortShuffleJob.lastFalseIdx = na_falsePrefixSum[valueCount-1];
 
-        jobHandle = radixSortShuffleJob.Schedule(valueCount, XL_BATCH_SIZE);
+        jobHandle = radixSortShuffleJob.Schedule(valueCount, Jobx.XL_BATCH_SIZE);
         jobHandle.Complete();
         na_values.CopyFrom(na_sortedValues);
         na_indices.CopyFrom(na_sortedIndices);

@@ -1,15 +1,42 @@
-using UnityEditor;
-using UnityEngine;
-using UnityEditor.SceneManagement;
-using UnityEditor.Experimental.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 namespace Voxell.Inspector
 {
-  public static class CustomEditorGUI
+  [CanEditMultipleObjects]
+  [CustomEditor(typeof(UnityEngine.Object), true)]
+  public class VXDefaultEditor : UnityEditor.Editor
   {
+    private IEnumerable<MethodInfo> _methods;
+
+    protected virtual void OnEnable()
+    {
+      _methods = VXEditorUtil.GetAllMethods(
+        target, m => m.GetCustomAttributes(typeof(ButtonAttribute), true).Length > 0);
+    }
+
+    public override void OnInspectorGUI()
+    {
+      base.DrawDefaultInspector();
+      DrawButtons();
+    }
+
+    protected void DrawButtons()
+    {
+      if (_methods.Any())
+      {
+        EditorGUILayout.Space();
+
+        foreach (var method in _methods)
+          MethodButton(serializedObject.targetObject, method);
+      }
+    }
+
     public static void MethodButton(UnityEngine.Object target, MethodInfo methodInfo)
     {
       ButtonAttribute buttonAttribute = (ButtonAttribute)methodInfo.GetCustomAttributes(typeof(ButtonAttribute), true)[0];

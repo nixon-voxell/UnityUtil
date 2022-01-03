@@ -13,6 +13,14 @@ namespace Voxell.Inspector
     public static readonly GUIStyleState subFoldoutNormal = new GUIStyleState { textColor = Color.gray * Color.cyan };
     public static readonly GUIStyleState subFoldoutOnNormal= new GUIStyleState { textColor = Color.cyan };
 
+    public static GUIStyle CenteredTitleStyle => new GUIStyle(EditorStyles.largeLabel)
+    {
+      alignment = TextAnchor.UpperCenter,
+      fontStyle = FontStyle.Bold,
+      fontSize = 18,
+      fixedHeight = 26
+    };
+
     public static GUIStyle CenteredLabelStyle => new GUIStyle(GUI.skin.label)
     {
       alignment = TextAnchor.UpperCenter,

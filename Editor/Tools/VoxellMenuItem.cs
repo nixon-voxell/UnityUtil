@@ -1,7 +1,7 @@
 using UnityEditor;
 using System.Reflection;
 
-namespace Voxell.Util
+namespace Voxell.Inspector.Tools
 {
   public static class CustomMenuItem
   {

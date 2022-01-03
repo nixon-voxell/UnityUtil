@@ -5,7 +5,7 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public class SumScanJob : Jobx, System.IDisposable
+  public class SumScanJob : System.IDisposable
   {
     private int _arrayLength;
     private NativeArray<int> na_array;
@@ -30,7 +30,7 @@ namespace Voxell.Jobx
       {
         na_prevArray.CopyFrom(na_array);
         sumScanJob.offset = offset;
-        jobHandle = sumScanJob.Schedule(_arrayLength, XL_BATCH_SIZE);
+        jobHandle = sumScanJob.Schedule(_arrayLength, Jobx.XL_BATCH_SIZE);
         jobHandle.Complete();
       }
       Profiler.EndSample();
