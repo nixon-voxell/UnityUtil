@@ -47,13 +47,11 @@ namespace Voxell.Mathx
     }
 
     /// <summary>Shuffles an array.</summary>
-    public static void ShuffleArray<T>(ref T[] decklist, uint seed=1)
+    public static void ShuffleArray<T>(ref T[] decklist)
     {
-      // make sure seed is not 0
-      Random rand = new Random(math.max(seed, 1));
       for (int i = 0; i < decklist.Length; i++)
       {
-        int randomIdx = rand.NextInt(0, decklist.Length);
+        int randomIdx = UnityEngine.Random.Range(0, decklist.Length);
         T tempItem = decklist[randomIdx];
         decklist[randomIdx] = decklist[i];
         decklist[i] = tempItem;

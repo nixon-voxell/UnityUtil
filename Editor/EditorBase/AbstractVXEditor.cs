@@ -8,7 +8,6 @@ namespace Voxell.Inspector
     public Color defaultBGColor;
 
     public virtual void OnEnable() => defaultBGColor = GUI.backgroundColor;
-
     public virtual void OnRender() => base.OnInspectorGUI();
 
     public override void OnInspectorGUI()

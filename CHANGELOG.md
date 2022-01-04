@@ -14,6 +14,9 @@
 - Added `ReadOnly` and `WriteOnly` tags to native arrays on `Jobx` where neccessary.
 - Improved performance of `Min/Max/Sum Scan` by increasing the batch size.
 - Prevent the allocation of new array everytime a new scan/sort is needed by caching it during initialization.
+- Removed Logging class.
+- added NativeGetTangents method (MeshUtil).
+- Shuffle array method in MathUtil now uses UnityEngine.Random instead of Unity.Mathematics.Random for easier usage (no need to think about what seed to provide).
 
 ## [1.3.0]
 
