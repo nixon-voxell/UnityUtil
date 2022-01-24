@@ -5,6 +5,8 @@ namespace Voxell.Mathx
 {
   public static class mathx
   {
+    public const float ONE_THIRD = 1.0f/3.0f;
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool approximately(float a, float b)
     {

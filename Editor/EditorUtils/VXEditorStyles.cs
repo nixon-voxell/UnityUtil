@@ -60,6 +60,9 @@ namespace Voxell.Inspector
       alignment = TextAnchor.MiddleRight
     };
 
+    public static GUIStyle parentBox => new GUIStyle(GUI.skin.box)
+    { padding = new RectOffset(15, 15, 15, 15) };
+
     public static GUIStyle box => new GUIStyle(GUI.skin.box)
     { padding = new RectOffset(10, 10, 10, 10) };
 

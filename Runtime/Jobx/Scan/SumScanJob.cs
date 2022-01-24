@@ -16,7 +16,7 @@ namespace Voxell.Jobx
     {
       this._arrayLength = na_array.Length;
       this.na_array = na_array;
-      this.na_prevArray = new NativeArray<int>(na_array, Allocator.TempJob);
+      this.na_prevArray = new NativeArray<int>(na_array, Allocator.Persistent);
       this.sumScanJob = new HillisSteeleSumScanJob(ref na_array, ref na_prevArray);
     }
 

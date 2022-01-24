@@ -8,6 +8,12 @@
   - Inspector View
   - Split View
 - Abstract Editor and Abstract Scriptable Editor.
+- Graphics
+  - `Blelloch Sum Scan` compute shader.
+  - `Hillis Steele Sum Scan` compute shader.
+  - `AABB Scan` compute shader.
+  - `Radix Sort` compute shader.
+  - unit tests for each of them.
 
 ### Changes
 

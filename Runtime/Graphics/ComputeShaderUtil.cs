@@ -40,13 +40,11 @@ namespace Voxell.Graphics
 
     public static void Init()
     {
-      if (util == null)
-      {
-        util = Resources.Load<ComputeShader>("Util");
-        kn_CopyBuffer = util.FindKernel("CopyBuffer");
-        kn_ZeroOut = util.FindKernel("ZeroOut");
-        kn_SetBufferAsThreadIdx = util.FindKernel("SetBufferAsThreadIdx");
-      }
+      if (util != null) return;
+      util = Resources.Load<ComputeShader>("Util");
+      kn_CopyBuffer = util.FindKernel("CopyBuffer");
+      kn_ZeroOut = util.FindKernel("ZeroOut");
+      kn_SetBufferAsThreadIdx = util.FindKernel("SetBufferAsThreadIdx");
     }
 
     internal static class ShaderBufferId

@@ -1,0 +1,38 @@
+// hillis steele inclusive float3 max scan
+
+#define MAX_BLOCK_SZ 64
+
+RWStructuredBuffer<float3> cb_in;
+
+uniform uint _len;
+uniform uint _offset;
+
+#pragma kernel HillisSteeleFloat3MaxScan
+[numthreads(MAX_BLOCK_SZ, 1, 1)]
+void HillisSteeleFloat3MaxScan(uint DTid : SV_DISPATCHTHREADID)
+{
+  if (DTid >= _len) return;
+
+  int sumIdx = DTid - _offset;
+  if (sumIdx >= 0)
+  {
+    float3 temp = cb_in[sumIdx];
+    DeviceMemoryBarrier();
+    cb_in[DTid] = max(temp, cb_in[DTid]);
+  }
+}
+
+#pragma kernel HillisSteeleFloat3MinScan
+[numthreads(MAX_BLOCK_SZ, 1, 1)]
+void HillisSteeleFloat3MinScan(uint DTid : SV_DISPATCHTHREADID)
+{
+  if (DTid >= _len) return;
+
+  int sumIdx = DTid - _offset;
+  if (sumIdx >= 0)
+  {
+    float3 temp = cb_in[sumIdx];
+    DeviceMemoryBarrier();
+    cb_in[DTid] = min(temp, cb_in[DTid]);
+  }
+}

@@ -1,0 +1,23 @@
+// hillis steele inclusive sum scan
+
+#define MAX_BLOCK_SZ 64
+
+RWStructuredBuffer<uint> cb_in;
+
+uniform uint _len;
+uniform uint _offset;
+
+#pragma kernel HillisSteeleSumScan
+[numthreads(MAX_BLOCK_SZ, 1, 1)]
+void HillisSteeleSumScan(uint DTid : SV_DISPATCHTHREADID)
+{
+  if (DTid >= _len) return;
+
+  int sumIdx = DTid - _offset;
+  if (sumIdx >= 0)
+  {
+    uint temp = cb_in[sumIdx];
+    DeviceMemoryBarrier();
+    cb_in[DTid] += temp;
+  }
+}

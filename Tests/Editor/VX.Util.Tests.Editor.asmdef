@@ -1,6 +1,6 @@
 {
     "name": "VX.Util.Tests.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Voxell",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

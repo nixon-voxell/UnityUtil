@@ -100,6 +100,29 @@ namespace Voxell
       meshData.GetIndices(na_triangles, submesh);
     }
 
+    /// <summary>
+    /// Reverse the triangle order of the mesh to flip the mesh
+    /// </summary>
+    /// <param name="mesh">mesh to be reversed</param>
+    public static void ReverseTriangleOrder(ref Mesh mesh)
+    {
+      for (int m = 0; m < mesh.subMeshCount; m++)
+      {
+        int[] triangles = mesh.GetTriangles(m);
+        for (int t = 0; t < triangles.Length; t += 3)
+        {
+          int temp = triangles[t + 0];
+          triangles[t + 0] = triangles[t + 1];
+          triangles[t + 1] = temp;
+        }
+        mesh.SetTriangles(triangles, m);
+      }
+
+      Vector3[] normals = mesh.normals;
+      for (int n=0; n < normals.Length; n++) normals[n] = -normals[n];
+      mesh.SetNormals(normals);
+    }
+
     public static void SeparateTriangles(
       ref Vector3[] verts,
       ref ushort[] indices,
