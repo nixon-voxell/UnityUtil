@@ -21,7 +21,7 @@ namespace Voxell.Jobx
       SumScanJob sumScanJob = new SumScanJob(ref na_array);
       sumScanJob.InclusiveSumScan();
 
-      // using serial sum scan method to make sure that the parallel method works
+      // using serial inclusive sum scan method to make sure that the parallel method works
       int sum = 0;
       for (int i=0; i < ARRAY_COUNT; i++)
       {
@@ -43,7 +43,7 @@ namespace Voxell.Jobx
       Float3MinScanJob float3MinScanJob = new Float3MinScanJob(ref na_array);
       float3MinScanJob.InclusiveMinScan();
 
-      // using serial min scan method to make sure that the parallel method works
+      // using serial inclusive min scan method to make sure that the parallel method works
       float3 float3Max = array[0];
       for (int i=0; i < ARRAY_COUNT; i++)
       {
@@ -65,7 +65,7 @@ namespace Voxell.Jobx
       Float3MaxScanJob float3MaxScanJob = new Float3MaxScanJob(ref na_array);
       float3MaxScanJob.InclusiveMaxScan();
 
-      // using serial max scan method to make sure that the parallel method works
+      // using serial inclusive max scan method to make sure that the parallel method works
       float3 float3Max = array[0];
       for (int i=0; i < ARRAY_COUNT; i++)
       {

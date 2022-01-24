@@ -8,9 +8,6 @@ namespace Voxell.Graphics
 
   public sealed class RadixSort : System.IDisposable
   {
-    private const int MAX_BLOCK_SZ = 64;
-    private const int BLOCK_SZ = 32;
-
     private static ComputeShader cs_radixSort;
     private BlellochSumScan _blellochSumScan;
     private static int kn_radixSortLocal, kn_globalShuffle;
@@ -25,7 +22,7 @@ namespace Voxell.Graphics
     {
       this._dataSize = dataSize;
 
-      this._sortGridSize = MathUtil.CalculateGrids(_dataSize, MAX_BLOCK_SZ);
+      this._sortGridSize = MathUtil.CalculateGrids(_dataSize, Graphics.M_BLOCK_SZ);
       this._blockSumsSize = 4 * _sortGridSize;
       this._blellochSumScan = new BlellochSumScan(_blockSumsSize);
 

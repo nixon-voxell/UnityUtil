@@ -10,14 +10,45 @@ namespace Voxell.Graphics
     private const int ARRAY_COUNT = 100000;
 
     [Test]
+    public void HillisSteeleSumScanTest()
+    {
+      uint[] array = new uint[ARRAY_COUNT];
+      uint[] scannedArray = new uint[ARRAY_COUNT];
+      for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomUInt();
+
+      ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
+
+      ComputeShaderUtil.Init();
+      HillisSteeleSumScan.Init();
+
+      cb_in.SetData(array);
+
+      HillisSteeleSumScan hillisSteeleSumScan = new HillisSteeleSumScan(ARRAY_COUNT);
+      hillisSteeleSumScan.Scan(ref cb_in);
+
+      cb_in.GetData(scannedArray);
+
+      // using serial inclusive sum scan method to make sure that the parallel method works
+      uint sum = 0;
+      for (int i=0; i < ARRAY_COUNT; i++)
+      {
+        sum += array[i];
+        Assert.AreEqual(sum, scannedArray[i], i.ToString());
+      }
+
+      cb_in.Dispose();
+      hillisSteeleSumScan.Dispose();
+    }
+
+    [Test]
     public void BlellochSumScanTest()
     {
-      int[] array = new int[ARRAY_COUNT];
-      int[] scannedArray = new int[ARRAY_COUNT];
-      for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomInt();
+      uint[] array = new uint[ARRAY_COUNT];
+      uint[] scannedArray = new uint[ARRAY_COUNT];
+      for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomUInt();
 
-      ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_int);
-      ComputeBuffer cb_out = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_int);
+      ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
+      ComputeBuffer cb_out = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
 
       ComputeShaderUtil.Init();
       BlellochSumScan.Init();
@@ -30,8 +61,8 @@ namespace Voxell.Graphics
 
       cb_out.GetData(scannedArray);
 
-      // using serial min scan method to make sure that the parallel method works
-      int sum = 0;
+      // using serial exclusive sum scan method to make sure that the parallel method works
+      uint sum = 0;
       for (int i=0; i < ARRAY_COUNT; i++)
       {
         Assert.AreEqual(sum, scannedArray[i]);

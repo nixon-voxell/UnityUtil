@@ -9,9 +9,6 @@ namespace Voxell.Graphics
   /// <summary>Blelloch exclusive sum scan.</summary>
   public sealed class BlellochSumScan : System.IDisposable
   {
-    private const int MAX_BLOCK_SZ = 64;
-    private const int BLOCK_SZ = 32;
-
     private static ComputeShader cs_blellochSumScan;
     private static int kn_preSumScan, kn_addBlockSums;
 
@@ -27,11 +24,11 @@ namespace Voxell.Graphics
     {
       // generate all grid sizes for blelloch sum scan
       List<int> blellochGridSizesList = new List<int>();
-      int blellochGridSize = MathUtil.CalculateGrids(dataSize, BLOCK_SZ);
+      int blellochGridSize = MathUtil.CalculateGrids(dataSize, Graphics.M_BLOCK_SZ);
       blellochGridSizesList.Add(blellochGridSize);
-      while (blellochGridSize > MAX_BLOCK_SZ)
+      while (blellochGridSize > Graphics.S_BLOCK_SZ)
       {
-        blellochGridSize = MathUtil.CalculateGrids(blellochGridSize, BLOCK_SZ);
+        blellochGridSize = MathUtil.CalculateGrids(blellochGridSize, Graphics.M_BLOCK_SZ);
         blellochGridSizesList.Add(blellochGridSize);
       }
 
@@ -86,9 +83,9 @@ namespace Voxell.Graphics
       cs_blellochSumScan.Dispatch(kn_preSumScan, blellochGridSize, 1, 1);
 
       // sum scan total sums produced by each block
-      // use basic implementation if number of total sums is <= 2 * BLOCK_SZ
+      // use basic implementation if number of total sums is <= 2 * Graphics.M_BLOCK_SZ
       // (this requires only one block to do the scan)
-      if (blellochGridSize <= MAX_BLOCK_SZ)
+      if (blellochGridSize <= Graphics.S_BLOCK_SZ)
       {
         ComputeShaderUtil.ZeroOut(ref cb_dummyGrpSums, 1);
 

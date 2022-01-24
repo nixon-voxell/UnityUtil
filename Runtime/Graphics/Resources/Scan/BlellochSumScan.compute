@@ -1,7 +1,7 @@
 // blelloch exclusive sum scan
 
-#define MAX_BLOCK_SZ 64
-#define BLOCK_SZ 32
+#define M_BLOCK_SZ 64
+#define S_BLOCK_SZ 32
 #define NUM_BANKS 16
 #define LOG_NUM_BANKS 4
 
@@ -19,10 +19,10 @@ RWStructuredBuffer<uint> cb_blockSums;
 
 uniform uint _len;
 
-groupshared uint s_out[MAX_BLOCK_SZ + (MAX_BLOCK_SZ >> LOG_NUM_BANKS)];
+groupshared uint s_out[M_BLOCK_SZ + (M_BLOCK_SZ >> LOG_NUM_BANKS)];
 
 #pragma kernel PreSumScan
-[numthreads(BLOCK_SZ, 1, 1)]
+[numthreads(S_BLOCK_SZ, 1, 1)]
 void PreSumScan(
   uint DTid : SV_DISPATCHTHREADID,
   uint Gidx : SV_GROUPINDEX,
@@ -30,24 +30,24 @@ void PreSumScan(
 )
 {
   int ai = Gidx;
-  int bi = Gidx + BLOCK_SZ;
+  int bi = Gidx + S_BLOCK_SZ;
 
   // Zero out the shared memory
   // Helpful especially when input size is not power of two
   s_out[Gidx] = 0;
-  s_out[Gidx + BLOCK_SZ] = 0;
-  s_out[Gidx + BLOCK_SZ + (BLOCK_SZ >> LOG_NUM_BANKS) + 1] = 0;
+  s_out[Gidx + S_BLOCK_SZ] = 0;
+  s_out[Gidx + S_BLOCK_SZ + (S_BLOCK_SZ >> LOG_NUM_BANKS) + 1] = 0;
 
   GroupMemoryBarrierWithGroupSync();
 
   // Copy cb_in to shared memory
   // Note that cb_in's elements are scattered into shared memory in light of avoiding bank conflicts
-  uint idx = MAX_BLOCK_SZ * Gid + Gidx;
+  uint idx = M_BLOCK_SZ * Gid + Gidx;
   if (idx < _len)
   {
     s_out[ai + CONFLICT_FREE_OFFSET(ai)] = cb_in[idx];
-    if (idx + BLOCK_SZ < _len)
-      s_out[bi + CONFLICT_FREE_OFFSET(bi)] = cb_in[idx + BLOCK_SZ];
+    if (idx + S_BLOCK_SZ < _len)
+      s_out[bi + CONFLICT_FREE_OFFSET(bi)] = cb_in[idx + S_BLOCK_SZ];
   }
 
   // For both upsweep and downsweep:
@@ -60,7 +60,7 @@ void PreSumScan(
 
   // Upsweep/Reduce step
   int offset = 1;
-  for (uint u=BLOCK_SZ; u > 0; u >>= 1)
+  for (uint u=S_BLOCK_SZ; u > 0; u >>= 1)
   {
     GroupMemoryBarrierWithGroupSync();
 
@@ -80,12 +80,12 @@ void PreSumScan(
   // Then clear the last element on the shared memory
   if (Gidx == 0) 
   { 
-    cb_blockSums[Gid] = s_out[MAX_BLOCK_SZ - 1 + CONFLICT_FREE_OFFSET(MAX_BLOCK_SZ - 1)];
-    s_out[MAX_BLOCK_SZ - 1 + CONFLICT_FREE_OFFSET(MAX_BLOCK_SZ - 1)] = 0;
+    cb_blockSums[Gid] = s_out[M_BLOCK_SZ - 1 + CONFLICT_FREE_OFFSET(M_BLOCK_SZ - 1)];
+    s_out[M_BLOCK_SZ - 1 + CONFLICT_FREE_OFFSET(M_BLOCK_SZ - 1)] = 0;
   }
 
   // Downsweep step
-  for (uint d=1; d < MAX_BLOCK_SZ; d <<= 1)
+  for (uint d=1; d < M_BLOCK_SZ; d <<= 1)
   {
     offset >>= 1;
     GroupMemoryBarrierWithGroupSync();
@@ -108,13 +108,13 @@ void PreSumScan(
   if (idx < _len)
   {
     cb_out[idx] = s_out[ai + CONFLICT_FREE_OFFSET(ai)];
-    if (idx + BLOCK_SZ < _len)
-      cb_out[idx + BLOCK_SZ] = s_out[bi + CONFLICT_FREE_OFFSET(bi)];
+    if (idx + S_BLOCK_SZ < _len)
+      cb_out[idx + S_BLOCK_SZ] = s_out[bi + CONFLICT_FREE_OFFSET(bi)];
   }
 }
 
 #pragma kernel AddBlockSums
-[numthreads(BLOCK_SZ, 1, 1)]
+[numthreads(S_BLOCK_SZ, 1, 1)]
 void AddBlockSums(
   uint Gidx : SV_GROUPINDEX,
   uint Gid : SV_GROUPID
@@ -122,11 +122,11 @@ void AddBlockSums(
 {
   uint d_block_sum_val = cb_blockSums[Gid];
 
-  uint idx = 2 * Gid * BLOCK_SZ + Gidx;
+  uint idx = 2 * Gid * S_BLOCK_SZ + Gidx;
   if (idx < _len)
   {
     cb_out[idx] = cb_in[idx] + d_block_sum_val;
-    if (idx + BLOCK_SZ < _len)
-      cb_out[idx + BLOCK_SZ] = cb_in[idx + BLOCK_SZ] + d_block_sum_val;
+    if (idx + S_BLOCK_SZ < _len)
+      cb_out[idx + S_BLOCK_SZ] = cb_in[idx + S_BLOCK_SZ] + d_block_sum_val;
   }
 }

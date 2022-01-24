@@ -12,6 +12,7 @@ namespace Voxell.Graphics
   {
     public static readonly int cb_in = Shader.PropertyToID("cb_in");
     public static readonly int cb_out = Shader.PropertyToID("cb_out");
+    public static readonly int cb_prev = Shader.PropertyToID("cb_prev");
     public static readonly int cb_blockSums = Shader.PropertyToID("cb_blockSums");
 
     public static readonly int cb_outIndex = Shader.PropertyToID("cb_outIndex");

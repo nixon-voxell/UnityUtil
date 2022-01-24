@@ -1,6 +1,6 @@
 // hillis steele inclusive float3 max scan
 
-#define MAX_BLOCK_SZ 64
+#define BLOCK_SZ 64
 
 RWStructuredBuffer<float3> cb_in;
 
@@ -8,7 +8,7 @@ uniform uint _len;
 uniform uint _offset;
 
 #pragma kernel HillisSteeleFloat3MaxScan
-[numthreads(MAX_BLOCK_SZ, 1, 1)]
+[numthreads(BLOCK_SZ, 1, 1)]
 void HillisSteeleFloat3MaxScan(uint DTid : SV_DISPATCHTHREADID)
 {
   if (DTid >= _len) return;
@@ -23,7 +23,7 @@ void HillisSteeleFloat3MaxScan(uint DTid : SV_DISPATCHTHREADID)
 }
 
 #pragma kernel HillisSteeleFloat3MinScan
-[numthreads(MAX_BLOCK_SZ, 1, 1)]
+[numthreads(BLOCK_SZ, 1, 1)]
 void HillisSteeleFloat3MinScan(uint DTid : SV_DISPATCHTHREADID)
 {
   if (DTid >= _len) return;
