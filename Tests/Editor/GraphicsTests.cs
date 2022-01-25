@@ -1,5 +1,7 @@
 using UnityEngine;
+using Unity.Mathematics;
 using NUnit.Framework;
+using Random = UnityEngine.Random;
 
 namespace Voxell.Graphics
 {
@@ -8,6 +10,68 @@ namespace Voxell.Graphics
   public class GraphicsTests
   {
     private const int ARRAY_COUNT = 100000;
+
+    [Test]
+    public void HillisSteeleFloat3MinScanTest()
+    {
+      float3[] array = new float3[ARRAY_COUNT];
+      float3[] scannedArray = new float3[ARRAY_COUNT];
+      for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomFloat3();
+
+      ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_float3);
+
+      ComputeShaderUtil.Init();
+      HillisSteeleFloat3MinScan.Init();
+
+      cb_in.SetData(array);
+
+      HillisSteeleFloat3MinScan hillisSteeleFloat3MinScan = new HillisSteeleFloat3MinScan(ARRAY_COUNT);
+      hillisSteeleFloat3MinScan.Scan(ref cb_in);
+
+      cb_in.GetData(scannedArray);
+
+      // using serial inclusive min scan method to make sure that the parallel method works
+      float3 float3Max = array[0];
+      for (int i=0; i < ARRAY_COUNT; i++)
+      {
+        float3Max = math.min(float3Max, array[i]);
+        Assert.AreEqual(float3Max, scannedArray[i]);
+      }
+
+      cb_in.Dispose();
+      hillisSteeleFloat3MinScan.Dispose();
+    }
+
+    [Test]
+    public void HillisSteeleFloat3MaxScanTest()
+    {
+      float3[] array = new float3[ARRAY_COUNT];
+      float3[] scannedArray = new float3[ARRAY_COUNT];
+      for (int i=0; i < ARRAY_COUNT; i++) array[i] = GenerateRandomFloat3();
+
+      ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_float3);
+
+      ComputeShaderUtil.Init();
+      HillisSteeleFloat3MaxScan.Init();
+
+      cb_in.SetData(array);
+
+      HillisSteeleFloat3MaxScan hillisSteeleFloat3MaxScan = new HillisSteeleFloat3MaxScan(ARRAY_COUNT);
+      hillisSteeleFloat3MaxScan.Scan(ref cb_in);
+
+      cb_in.GetData(scannedArray);
+
+      // using serial inclusive min scan method to make sure that the parallel method works
+      float3 float3Max = array[0];
+      for (int i=0; i < ARRAY_COUNT; i++)
+      {
+        float3Max = math.max(float3Max, array[i]);
+        Assert.AreEqual(float3Max, scannedArray[i]);
+      }
+
+      cb_in.Dispose();
+      hillisSteeleFloat3MaxScan.Dispose();
+    }
 
     [Test]
     public void HillisSteeleSumScanTest()
@@ -110,6 +174,7 @@ namespace Voxell.Graphics
       radixSort.Dispose();
     }
 
+    private float3 GenerateRandomFloat3() => Random.insideUnitSphere * Random.Range(0.0f, (float)ARRAY_COUNT);
     private int GenerateRandomInt() => Random.Range(0, ARRAY_COUNT);
     private uint GenerateRandomUInt() => (uint)Random.Range(0, ARRAY_COUNT);
   }
