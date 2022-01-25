@@ -5,7 +5,7 @@ namespace Voxell.Graphics
 {
   using Mathx;
 
-  public sealed class HillisSteeleSumScan : System.IDisposable
+  public sealed class HillisSteeleSumScan : AbstractScan
   {
     private static ComputeShader cs_hillisSteeleSumScan;
     private static int kn_hillisSteeleSumScan;
@@ -32,20 +32,20 @@ namespace Voxell.Graphics
     public void Scan(ref ComputeBuffer cb_in)
     {
       Profiler.BeginSample("HillisSteeleSumScan");
-      cs_hillisSteeleSumScan.SetInt(ScanPropertyId.len, _dataSize);
-      cs_hillisSteeleSumScan.SetBuffer(kn_hillisSteeleSumScan, ScanBufferId.cb_in, cb_in);
-      cs_hillisSteeleSumScan.SetBuffer(kn_hillisSteeleSumScan, ScanBufferId.cb_prev, cb_prev);
+      cs_hillisSteeleSumScan.SetInt(PropertyID.len, _dataSize);
+      cs_hillisSteeleSumScan.SetBuffer(kn_hillisSteeleSumScan, BufferID.cb_in, cb_in);
+      cs_hillisSteeleSumScan.SetBuffer(kn_hillisSteeleSumScan, BufferID.cb_prev, cb_prev);
 
       for (int offset=1; offset < _dataSize; offset <<= 1)
       {
         ComputeShaderUtil.CopyBuffer(ref cb_in, ref cb_prev, _dataSize);
-        cs_hillisSteeleSumScan.SetInt(ScanPropertyId.offset, offset);
+        cs_hillisSteeleSumScan.SetInt(PropertyID.offset, offset);
         cs_hillisSteeleSumScan.Dispatch(kn_hillisSteeleSumScan, _gridSize, 1, 1);
       }
       Profiler.EndSample();
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
       cb_prev.Dispose();
     }

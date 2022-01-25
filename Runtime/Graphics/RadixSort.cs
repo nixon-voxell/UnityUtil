@@ -57,7 +57,7 @@ namespace Voxell.Graphics
       // block-wise radix sort (write blocks back to global memory)
       for (int shiftWidth=0; shiftWidth < maxShiftWidth; shiftWidth+=2)
       {
-        cs_radixSort.SetInt(RadixSortPropertyId.shiftWidth, shiftWidth);
+        cs_radixSort.SetInt(PropertyID.shiftWidth, shiftWidth);
         cs_radixSort.Dispatch(kn_radixSortLocal, _sortGridSize, 1, 1);
 
         // scan global block sum array
@@ -79,24 +79,24 @@ namespace Voxell.Graphics
     /// <param name="_maxShiftWidth">number of bits to be sorted</param>
     public void Setup(ref ComputeBuffer cb_sort, ref ComputeBuffer cb_indices)
     {
-      cs_radixSort.SetInt(RadixSortPropertyId.gridSize, _sortGridSize);
-      cs_radixSort.SetInt(RadixSortPropertyId.len, _dataSize);
+      cs_radixSort.SetInt(PropertyID.gridSize, _sortGridSize);
+      cs_radixSort.SetInt(PropertyID.len, _dataSize);
 
-      cs_radixSort.SetBuffer(kn_radixSortLocal, RadixSortBufferId.cb_in, cb_sort);
-      cs_radixSort.SetBuffer(kn_radixSortLocal, RadixSortBufferId.cb_indices, cb_indices);
+      cs_radixSort.SetBuffer(kn_radixSortLocal, BufferID.cb_in, cb_sort);
+      cs_radixSort.SetBuffer(kn_radixSortLocal, BufferID.cb_indices, cb_indices);
 
-      cs_radixSort.SetBuffer(kn_globalShuffle, RadixSortBufferId.cb_out, cb_sort);
-      cs_radixSort.SetBuffer(kn_globalShuffle, RadixSortBufferId.cb_indices, cb_indices);
+      cs_radixSort.SetBuffer(kn_globalShuffle, BufferID.cb_out, cb_sort);
+      cs_radixSort.SetBuffer(kn_globalShuffle, BufferID.cb_indices, cb_indices);
 
-      cs_radixSort.SetBuffer(kn_radixSortLocal, RadixSortBufferId.cb_outSorted, cb_sortTemp);
-      cs_radixSort.SetBuffer(kn_radixSortLocal, RadixSortBufferId.cb_outIndex, cb_indexTemp);
-      cs_radixSort.SetBuffer(kn_radixSortLocal, RadixSortBufferId.cb_prefixSums, cb_prefixSums);
-      cs_radixSort.SetBuffer(kn_radixSortLocal, RadixSortBufferId.cb_blockSums, cb_blockSums);
+      cs_radixSort.SetBuffer(kn_radixSortLocal, BufferID.cb_outSorted, cb_sortTemp);
+      cs_radixSort.SetBuffer(kn_radixSortLocal, BufferID.cb_outIndex, cb_indexTemp);
+      cs_radixSort.SetBuffer(kn_radixSortLocal, BufferID.cb_prefixSums, cb_prefixSums);
+      cs_radixSort.SetBuffer(kn_radixSortLocal, BufferID.cb_blockSums, cb_blockSums);
 
-      cs_radixSort.SetBuffer(kn_globalShuffle, RadixSortBufferId.cb_outSorted, cb_sortTemp);
-      cs_radixSort.SetBuffer(kn_globalShuffle, RadixSortBufferId.cb_outIndex, cb_indexTemp);
-      cs_radixSort.SetBuffer(kn_globalShuffle, RadixSortBufferId.cb_prefixSums, cb_prefixSums);
-      cs_radixSort.SetBuffer(kn_globalShuffle, RadixSortBufferId.cb_scanBlockSums, cb_scanBlockSums);
+      cs_radixSort.SetBuffer(kn_globalShuffle, BufferID.cb_outSorted, cb_sortTemp);
+      cs_radixSort.SetBuffer(kn_globalShuffle, BufferID.cb_outIndex, cb_indexTemp);
+      cs_radixSort.SetBuffer(kn_globalShuffle, BufferID.cb_prefixSums, cb_prefixSums);
+      cs_radixSort.SetBuffer(kn_globalShuffle, BufferID.cb_scanBlockSums, cb_scanBlockSums);
     }
 
     public void Dispose()
@@ -107,6 +107,26 @@ namespace Voxell.Graphics
       cb_blockSums?.Dispose();
       cb_scanBlockSums?.Dispose();
       _blellochSumScan?.Dispose();
+    }
+
+    private static class PropertyID
+    {
+      public static readonly int len = Shader.PropertyToID("_len");
+      public static readonly int gridSize = Shader.PropertyToID("_gridSize");
+      public static readonly int shiftWidth = Shader.PropertyToID("_shiftWidth");
+    }
+
+    private static class BufferID
+    {
+      public static readonly int cb_in = Shader.PropertyToID("cb_in");
+      public static readonly int cb_out = Shader.PropertyToID("cb_out");
+      public static readonly int cb_outSorted = Shader.PropertyToID("cb_outSorted");
+      public static readonly int cb_prefixSums = Shader.PropertyToID("cb_prefixSums");
+      public static readonly int cb_blockSums = Shader.PropertyToID("cb_blockSums");
+      public static readonly int cb_scanBlockSums = Shader.PropertyToID("cb_scanBlockSums");
+
+      public static readonly int cb_outIndex = Shader.PropertyToID("cb_outIndex");
+      public static readonly int cb_indices = Shader.PropertyToID("cb_indices");
     }
   }
 }

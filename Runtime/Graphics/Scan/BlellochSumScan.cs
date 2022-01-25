@@ -7,7 +7,7 @@ namespace Voxell.Graphics
   using Mathx;
 
   /// <summary>Blelloch exclusive sum scan.</summary>
-  public sealed class BlellochSumScan : System.IDisposable
+  public sealed class BlellochSumScan : AbstractScan
   {
     private static ComputeShader cs_blellochSumScan;
     private static int kn_preSumScan, kn_addBlockSums;
@@ -76,10 +76,10 @@ namespace Voxell.Graphics
       ComputeShaderUtil.ZeroOut(ref cb_sumScanBlockSum, blellochGridSize);
 
       // sum scan data allocated to each block
-      cs_blellochSumScan.SetInt(ScanPropertyId.len, dataSize);
-      cs_blellochSumScan.SetBuffer(kn_preSumScan, ScanBufferId.cb_out, cb_out);
-      cs_blellochSumScan.SetBuffer(kn_preSumScan, ScanBufferId.cb_in, cb_in);
-      cs_blellochSumScan.SetBuffer(kn_preSumScan, ScanBufferId.cb_blockSums, cb_sumScanBlockSum);
+      cs_blellochSumScan.SetInt(PropertyID.len, dataSize);
+      cs_blellochSumScan.SetBuffer(kn_preSumScan, BufferID.cb_out, cb_out);
+      cs_blellochSumScan.SetBuffer(kn_preSumScan, BufferID.cb_in, cb_in);
+      cs_blellochSumScan.SetBuffer(kn_preSumScan, BufferID.cb_blockSums, cb_sumScanBlockSum);
       cs_blellochSumScan.Dispatch(kn_preSumScan, blellochGridSize, 1, 1);
 
       // sum scan total sums produced by each block
@@ -92,10 +92,10 @@ namespace Voxell.Graphics
         ComputeBuffer cb_preSumScanTemp = cb_preSumScanTemps[recurseNum];
         ComputeShaderUtil.CopyBuffer(ref cb_sumScanBlockSum, ref cb_preSumScanTemp, blellochGridSize);
 
-        cs_blellochSumScan.SetInt(ScanPropertyId.len, blellochGridSize);
-        cs_blellochSumScan.SetBuffer(kn_preSumScan, ScanBufferId.cb_out, cb_sumScanBlockSum);
-        cs_blellochSumScan.SetBuffer(kn_preSumScan, ScanBufferId.cb_in, cb_preSumScanTemp);
-        cs_blellochSumScan.SetBuffer(kn_preSumScan, ScanBufferId.cb_blockSums, cb_dummyGrpSums);
+        cs_blellochSumScan.SetInt(PropertyID.len, blellochGridSize);
+        cs_blellochSumScan.SetBuffer(kn_preSumScan, BufferID.cb_out, cb_sumScanBlockSum);
+        cs_blellochSumScan.SetBuffer(kn_preSumScan, BufferID.cb_in, cb_preSumScanTemp);
+        cs_blellochSumScan.SetBuffer(kn_preSumScan, BufferID.cb_blockSums, cb_dummyGrpSums);
         cs_blellochSumScan.Dispatch(kn_preSumScan, 1, 1, 1);
 
       } else // else, recurse on this same function as you'll need the full-blown scan for the block sums
@@ -108,16 +108,16 @@ namespace Voxell.Graphics
       ComputeBuffer cb_addBlockSumsTemp = cb_addBlockSumsTemps[recurseNum];
       ComputeShaderUtil.CopyBuffer(ref cb_out, ref cb_addBlockSumsTemp, dataSize);
       // add each block's total sum to its scan output in order to get the final, global scanned array
-      cs_blellochSumScan.SetInt(ScanPropertyId.len, dataSize);
-      cs_blellochSumScan.SetBuffer(kn_addBlockSums, ScanBufferId.cb_out, cb_out);
-      cs_blellochSumScan.SetBuffer(kn_addBlockSums, ScanBufferId.cb_in, cb_addBlockSumsTemp);
-      cs_blellochSumScan.SetBuffer(kn_addBlockSums, ScanBufferId.cb_blockSums, cb_sumScanBlockSum);
+      cs_blellochSumScan.SetInt(PropertyID.len, dataSize);
+      cs_blellochSumScan.SetBuffer(kn_addBlockSums, BufferID.cb_out, cb_out);
+      cs_blellochSumScan.SetBuffer(kn_addBlockSums, BufferID.cb_in, cb_addBlockSumsTemp);
+      cs_blellochSumScan.SetBuffer(kn_addBlockSums, BufferID.cb_blockSums, cb_sumScanBlockSum);
       cs_blellochSumScan.Dispatch(kn_addBlockSums, blellochGridSize, 1, 1);
 
       Profiler.EndSample();
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
       for (int b=0, length=_gridSizes.Length; b < length; b++)
       {

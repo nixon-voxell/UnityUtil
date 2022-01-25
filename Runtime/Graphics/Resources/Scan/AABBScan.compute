@@ -3,6 +3,7 @@
 #define BLOCK_SZ 64
 
 RWStructuredBuffer<float3> cb_in;
+StructuredBuffer<float3> cb_prev;
 
 uniform uint _len;
 uniform uint _offset;
