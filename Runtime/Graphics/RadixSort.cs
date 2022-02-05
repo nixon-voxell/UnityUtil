@@ -32,14 +32,14 @@ namespace Voxell.Graphics
       this.cb_scanBlockSums = new ComputeBuffer(_blockSumsSize, StrideSize.s_uint);
     }
 
-    public static void Init()
+    public static void InitKernels()
     {
       if (cs_radixSort != null) return;
       cs_radixSort = Resources.Load<ComputeShader>("RadixSort");
       kn_radixSortLocal = cs_radixSort.FindKernel("RadixSortLocal");
       kn_globalShuffle = cs_radixSort.FindKernel("GlobalShuffle");
 
-      BlellochSumScan.Init();
+      BlellochSumScan.InitKernels();
     }
 
     /// <summary>Sorts an array of unsigned integers in parallel.</summary>

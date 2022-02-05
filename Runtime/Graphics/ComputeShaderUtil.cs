@@ -51,7 +51,7 @@ namespace Voxell.Graphics
       cs_float3.Dispatch(kn_CopyBufferFloat3, gridSize, 1, 1);
     }
 
-    public static void Init()
+    public static void InitKernels()
     {
       if (cs_uint != null) return;
       cs_uint = Resources.Load<ComputeShader>("Util/Util.UInt");

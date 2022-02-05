@@ -20,8 +20,8 @@ namespace Voxell.Graphics
 
       ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_float3);
 
-      ComputeShaderUtil.Init();
-      HillisSteeleFloat3MinScan.Init();
+      ComputeShaderUtil.InitKernels();
+      HillisSteeleFloat3MinScan.InitKernels();
 
       cb_in.SetData(array);
 
@@ -51,8 +51,8 @@ namespace Voxell.Graphics
 
       ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_float3);
 
-      ComputeShaderUtil.Init();
-      HillisSteeleFloat3MaxScan.Init();
+      ComputeShaderUtil.InitKernels();
+      HillisSteeleFloat3MaxScan.InitKernels();
 
       cb_in.SetData(array);
 
@@ -82,8 +82,8 @@ namespace Voxell.Graphics
 
       ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
 
-      ComputeShaderUtil.Init();
-      HillisSteeleSumScan.Init();
+      ComputeShaderUtil.InitKernels();
+      HillisSteeleSumScan.InitKernels();
 
       cb_in.SetData(array);
 
@@ -114,8 +114,8 @@ namespace Voxell.Graphics
       ComputeBuffer cb_in = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
       ComputeBuffer cb_out = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
 
-      ComputeShaderUtil.Init();
-      BlellochSumScan.Init();
+      ComputeShaderUtil.InitKernels();
+      BlellochSumScan.InitKernels();
 
       cb_in.SetData(array);
       ComputeShaderUtil.ZeroOut(ref cb_out, ARRAY_COUNT);
@@ -149,8 +149,8 @@ namespace Voxell.Graphics
       ComputeBuffer cb_sort = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_uint);
       ComputeBuffer cb_indices = new ComputeBuffer(ARRAY_COUNT, StrideSize.s_int);
 
-      ComputeShaderUtil.Init();
-      RadixSort.Init();
+      ComputeShaderUtil.InitKernels();
+      RadixSort.InitKernels();
 
       cb_sort.SetData(array);
       cb_indices.SetData(indices);

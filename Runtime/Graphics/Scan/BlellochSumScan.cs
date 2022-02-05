@@ -56,7 +56,7 @@ namespace Voxell.Graphics
         this.cb_addBlockSumsTemps[b] = new ComputeBuffer(_gridSizes[b-1], StrideSize.s_uint);
     }
 
-    public static void Init()
+    public static void InitKernels()
     {
       if (cs_blellochSumScan != null) return;
       cs_blellochSumScan = Resources.Load<ComputeShader>("Scan/BlellochSumScan");

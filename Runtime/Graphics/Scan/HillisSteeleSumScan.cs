@@ -22,7 +22,7 @@ namespace Voxell.Graphics
       cb_prev = new ComputeBuffer(dataSize, StrideSize.s_uint);
     }
 
-    public static void Init()
+    public static void InitKernels()
     {
       if (cs_hillisSteeleSumScan != null) return;
       cs_hillisSteeleSumScan = Resources.Load<ComputeShader>("Scan/HillisSteeleSumScan");

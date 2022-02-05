@@ -22,7 +22,7 @@ namespace Voxell.Graphics
       cb_prev = new ComputeBuffer(dataSize, StrideSize.s_float3);
     }
 
-    public static void Init()
+    public static void InitKernels()
     {
       if (cs_hillisSteeleFloat3MaxScan != null) return;
       cs_hillisSteeleFloat3MaxScan = Resources.Load<ComputeShader>("Scan/HillisSteeleFloat3MaxScan");
