@@ -1,8 +1,9 @@
 using UnityEngine;
-using Voxell.Mathx;
 
 namespace Voxell.Graphics
 {
+  using Mathx;
+
   public static class ComputeShaderUtil
   {
     public static ComputeShader cs_uint;

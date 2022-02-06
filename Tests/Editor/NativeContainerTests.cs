@@ -2,10 +2,11 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
 using NUnit.Framework;
-using Voxell.Mathx;
 
 namespace Voxell.NativeContainers
 {
+  using Mathx;
+
   public class NativeContainerTests
   {
     private const int BATCH_SIZE = 16;
