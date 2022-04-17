@@ -2,8 +2,6 @@
 
 ### New Features
 
-- Native Containers
-  - Native Exchange Array (atomic exchange of an array of int).
 - Custom Editor Views for UIBuilder
   - Inspector View
   - Split View
@@ -14,6 +12,7 @@
   - `AABB Scan` compute shader.
   - `Radix Sort` compute shader.
   - unit tests for each of them.
+- Added "writing" methods to streaming asset files in `FileUtilx`.
 
 ### Changes
 
@@ -22,7 +21,8 @@
 - Prevent the allocation of new array everytime a new scan/sort is needed by caching it during initialization.
 - Removed Logging class.
 - added NativeGetTangents method (MeshUtil).
-- Shuffle array method in MathUtil now uses UnityEngine.Random instead of Unity.Mathematics.Random for easier usage (no need to think about what seed to provide).
+- Shuffle array method in MathUtil now uses UnityEngine.Random instead of Unity.Mathematics.Random for easier usage (no need to think about what seed to provide & since it is a serial method).
+- Renamed `Init()` method to `InitKernels()`.
 
 ## [1.3.0]
 
