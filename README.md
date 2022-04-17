@@ -8,7 +8,6 @@ This package is where all the utility functions as well as all the custom inspec
   - [Utilities](#utilities)
     - [MathUtil](#mathutil)
     - [Under the hood](#under-the-hood)
-  - [Logging](#logging)
   - [Support the project!](#support-the-project)
   - [Join the community!](#join-the-community)
   - [License](#license)
@@ -76,34 +75,15 @@ int[] shuffledArray = new int[length];
 for (int i=0; i < length; i++) shuffledArray[i] = i;
 
 // ShuffleArray method
-int seed = 3;
-Random rand = new Random(math.max(seed, 1));
 for (int i = 0; i < shuffledArray.Length; i++)
 {
-  int randomIdx = rand.NextInt(0, shuffledArray.Length);
+  int randomIdx = UnityEngine.Random.Range(0, shuffledArray.Length);
   int tempItem = shuffledArray[randomIdx];
   shuffledArray[randomIdx] = shuffledArray[i];
   shuffledArray[i] = tempItem;
 }
 
 Debug.Log(shuffledArray);
-```
-
-## Logging
-
-```cs
-using UnityEngine;
-using Voxell;
-
-public class LoggingTest : MonoBehaviour
-{
-  public Logger logger;
-
-  public void NormalLog() => logger.ConditionalLog("NormalLog", LogImportance.Info, LogType.Log);
-  public void ImportantLog() => logger.ConditionalLog("ImportantLog", LogImportance.Important, LogType.Log);
-  public void CrucialWarning() => logger.ConditionalLog("CrucialWarning", LogImportance.Crucial, LogType.Warning);
-  public void CriticalError() => logger.ConditionalLog("CriticalError", LogImportance.Critical, LogType.Error);
-}
 ```
 
 ## Support the project!

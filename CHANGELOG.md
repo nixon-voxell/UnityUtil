@@ -1,3 +1,30 @@
+## [1.4.0]
+
+### New Features
+
+- Custom Editor Views for UIBuilder
+  - Inspector View
+  - Split View
+- Abstract Editor and Abstract Scriptable Editor.
+- Graphics
+  - `Blelloch Sum Scan` compute shader.
+  - `Hillis Steele Sum Scan` compute shader.
+  - `AABB Scan` compute shader.
+  - `Radix Sort` compute shader.
+  - unit tests for each of them.
+- Added "writing" methods to streaming asset files in `FileUtilx`.
+
+### Changes
+
+- Added `ReadOnly` and `WriteOnly` tags to native arrays on `Jobx` where neccessary.
+- Improved performance of `Min/Max/Sum Scan` by increasing the batch size.
+- Prevent the allocation of new array everytime a new scan/sort is needed by caching it during initialization.
+- Removed Logging class.
+- added NativeGetTangents method (MeshUtil).
+- Shuffle array method in MathUtil now uses UnityEngine.Random instead of Unity.Mathematics.Random for easier usage (no need to think about what seed to provide & since it is a serial method).
+- Renamed `Init()` method to `InitKernels()`.
+- `NativeContainers` completely removed. (this action has been made due to the additional complexitiy when using native containers on simple tasks like `Interlocked.Exchange` or `Interlocked.Increment`, these operations can be done quite easily using unsafe and pointers in a Job System)
+
 ## [1.3.0]
 
 ### New Features
@@ -14,7 +41,7 @@
 - mathx:
   - `approximately_zero` function.
   - lower case for `long_axis` function.
-- directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.)
+- directional vectors added for `float2x` and `float3x` (e.g. up, down, forwad, etc.).
 - Created unit tests for `Jobx` and `NativeContainers`.
 
 ### Changes

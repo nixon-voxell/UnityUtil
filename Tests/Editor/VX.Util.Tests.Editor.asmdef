@@ -1,11 +1,10 @@
 {
     "name": "VX.Util.Tests.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Voxell",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "VX.Util.Runtime",
-        "VX.Util.Runtime.NativeContainers",
         "Unity.Mathematics",
         "Unity.Collections",
         "Unity.Jobs",
