@@ -5,7 +5,6 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "VX.Util.Runtime",
-        "VX.Util.Runtime.NativeContainers",
         "Unity.Mathematics",
         "Unity.Collections",
         "Unity.Jobs",
