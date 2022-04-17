@@ -23,6 +23,7 @@
 - added NativeGetTangents method (MeshUtil).
 - Shuffle array method in MathUtil now uses UnityEngine.Random instead of Unity.Mathematics.Random for easier usage (no need to think about what seed to provide & since it is a serial method).
 - Renamed `Init()` method to `InitKernels()`.
+- `NativeContainers` completely removed. (this action has been made due to the additional complexitiy when using native containers on simple tasks like `Interlocked.Exchange` or `Interlocked.Increment`, these operations can be done quite easily using unsafe and pointers in a Job System)
 
 ## [1.3.0]
 
