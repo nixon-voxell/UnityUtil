@@ -1,3 +1,12 @@
+## [1.4.1]
+
+### Changes
+
+- `FoldableReorderableList`:
+  - Optional parameters for `draggable`, `displayHeader`, `displayAddButton`, `displayRemoveButton`, `multiSelect`, and `prefix`.
+  - `multiSelect` is a newly added parameter.
+  - Increase header rect by 2.0f to allow characters like 'g' and 'y' to be fully rendered.
+
 ## [1.4.0]
 
 ### New Features

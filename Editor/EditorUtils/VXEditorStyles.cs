@@ -67,11 +67,10 @@ namespace Voxell.Inspector
     { padding = new RectOffset(10, 10, 10, 10) };
 
     public static ReorderableList FoldableReorderableList(
-      SerializedObject serializedObject,
-      SerializedProperty property,
-      bool draggable, bool displayHeader,
-      bool displayAddButton, bool displayRemoveButton,
-      string prefix = ""
+      SerializedObject serializedObject, SerializedProperty property,
+      bool draggable = true, bool displayHeader = true,
+      bool displayAddButton = true, bool displayRemoveButton = true,
+      bool multiSelect = true, string prefix = ""
     )
     {
       bool showPrefix = !string.IsNullOrEmpty(prefix);
@@ -81,9 +80,11 @@ namespace Voxell.Inspector
         draggable, displayHeader,
         displayAddButton, displayRemoveButton
       );
+      list.multiSelect = multiSelect;
 
       list.drawHeaderCallback = (Rect rect) =>
       {
+        rect.height += 2.0f;
         EditorGUI.indentLevel += 1;
         property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, property.displayName, true, ReordableFoldoutStyle);
         list.draggable = property.isExpanded && draggable;
