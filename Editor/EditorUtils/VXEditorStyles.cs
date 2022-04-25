@@ -84,7 +84,7 @@ namespace Voxell.Inspector
 
       list.drawHeaderCallback = (Rect rect) =>
       {
-        rect.height += 2.0f;
+        rect.height += 3.0f;
         EditorGUI.indentLevel += 1;
         property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, property.displayName, true, ReordableFoldoutStyle);
         list.draggable = property.isExpanded && draggable;
