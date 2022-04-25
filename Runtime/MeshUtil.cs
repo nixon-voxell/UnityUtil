@@ -18,6 +18,11 @@ namespace Voxell
       newMesh.normals = originMesh.normals;
       newMesh.colors = originMesh.colors;
       newMesh.tangents = originMesh.tangents;
+
+      int subMeshCount = originMesh.subMeshCount;
+      newMesh.subMeshCount = subMeshCount;
+      for (int s=0; s < subMeshCount; s++)
+        newMesh.SetSubMesh(s, originMesh.GetSubMesh(s));
     }
 
     /// <summary>Get native array of mesh vertices.</summary>
