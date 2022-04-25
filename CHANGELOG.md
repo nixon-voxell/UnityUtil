@@ -5,7 +5,8 @@
 - `FoldableReorderableList`:
   - Optional parameters for `draggable`, `displayHeader`, `displayAddButton`, `displayRemoveButton`, `multiSelect`, and `prefix`.
   - `multiSelect` is a newly added parameter.
-  - Increase header rect by 2.0f to allow characters like 'g' and 'y' to be fully rendered.
+  - Increase header rect by 3.0f to allow characters like 'g' and 'y' to be fully rendered.
+  - Uses serialized property from the list instead of the cached serialized property taken in as the function's parameter.
 - `spaceA` and `spaceB` changed to `SPACE_A` and `SPACE_B` respectively.
 - `InspectorView` returns `Editor` when initializing.
 

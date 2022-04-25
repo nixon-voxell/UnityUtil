@@ -84,9 +84,13 @@ namespace Voxell.Inspector
 
       list.drawHeaderCallback = (Rect rect) =>
       {
+        SerializedProperty property = list.serializedProperty;
         rect.height += 3.0f;
         EditorGUI.indentLevel += 1;
-        property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, property.displayName, true, ReordableFoldoutStyle);
+
+        property.isExpanded = EditorGUI.Foldout(
+          rect, property.isExpanded, property.displayName, true, ReordableFoldoutStyle
+        );
         list.draggable = property.isExpanded && draggable;
         list.displayAdd = property.isExpanded && displayAddButton;
         list.displayRemove = property.isExpanded && displayRemoveButton;
@@ -95,11 +99,13 @@ namespace Voxell.Inspector
 
       list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
       {
+        SerializedProperty property = list.serializedProperty;
         if (!property.isExpanded)
         {
           GUI.enabled = index == property.arraySize-1;
           return;
         }
+
         EditorGUI.PropertyField(
           rect, property.GetArrayElementAtIndex(index),
           new GUIContent(showPrefix ? $"{prefix}{index}" : "")
@@ -108,6 +114,7 @@ namespace Voxell.Inspector
 
       list.elementHeightCallback = (int indexer) =>
       {
+        SerializedProperty property = list.serializedProperty;
         if (!property.isExpanded) return 0;
         else return list.elementHeight;
       };
