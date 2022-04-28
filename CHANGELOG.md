@@ -9,6 +9,7 @@
   - Uses serialized property from the list instead of the cached serialized property taken in as the function's parameter.
 - `spaceA` and `spaceB` changed to `SPACE_A` and `SPACE_B` respectively.
 - `InspectorView` returns `Editor` when initializing.
+- `OnChange` method implemented for abstract editors. This method will be called whenever there is any changes made to the editor.
 
 ## [1.4.0]
 
