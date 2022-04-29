@@ -70,10 +70,11 @@ namespace Voxell.Inspector
       SerializedObject serializedObject, SerializedProperty property,
       bool draggable = true, bool displayHeader = true,
       bool displayAddButton = true, bool displayRemoveButton = true,
-      bool multiSelect = true, string prefix = ""
+      bool multiSelect = true, string prefix = "", string header = ""
     )
     {
       bool showPrefix = !string.IsNullOrEmpty(prefix);
+      if (string.IsNullOrEmpty(header)) header = property.displayName;
 
       ReorderableList list = new ReorderableList(
         serializedObject, property,
@@ -89,7 +90,7 @@ namespace Voxell.Inspector
         EditorGUI.indentLevel += 1;
 
         property.isExpanded = EditorGUI.Foldout(
-          rect, property.isExpanded, property.displayName, true, ReordableFoldoutStyle
+          rect, property.isExpanded, header, true, ReordableFoldoutStyle
         );
         list.draggable = property.isExpanded && draggable;
         list.displayAdd = property.isExpanded && displayAddButton;
