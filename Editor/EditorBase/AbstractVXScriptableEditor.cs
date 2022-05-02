@@ -16,7 +16,7 @@ namespace Voxell.Inspector
       FindProperties();
       OnRender();
 
-      EditorGUI.EndChangeCheck();
+      if (EditorGUI.EndChangeCheck()) OnChange();
       serializedScriptableObject.ApplyModifiedProperties();
     }
   }
