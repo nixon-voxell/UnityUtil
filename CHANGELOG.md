@@ -1,3 +1,9 @@
+## [1.4.2]
+
+### New Features
+
+- Added inverse lerp functions to support `float`, `float2`, and `float4` operations.
+
 ## [1.4.1]
 
 ### Changes
