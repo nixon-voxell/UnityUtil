@@ -6,7 +6,9 @@
 
 ### Changes
 
-- `FoldableReorderableList` now supports serialized structs.
+- `FoldableReorderableList`:
+  - Supports serialized structs/class.
+  - Element height now depends on serialized property height.
 
 ## [1.4.1]
 

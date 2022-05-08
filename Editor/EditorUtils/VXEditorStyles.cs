@@ -125,7 +125,13 @@ namespace Voxell.Inspector
       {
         SerializedProperty property = list.serializedProperty;
         if (!property.isExpanded) return 0.0f;
-        else return EditorGUI.GetPropertyHeight(property.GetArrayElementAtIndex(indexer));
+        else
+        {
+          if (indexer < property.arraySize)
+            return EditorGUI.GetPropertyHeight(property.GetArrayElementAtIndex(indexer));
+
+          return 0.0f;
+        }
       };
 
       return list;
