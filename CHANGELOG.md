@@ -4,6 +4,10 @@
 
 - Added inverse lerp functions to support `float`, `float2`, and `float4` operations.
 
+### Changes
+
+- `FoldableReorderableList` now supports serialized structs.
+
 ## [1.4.1]
 
 ### Changes

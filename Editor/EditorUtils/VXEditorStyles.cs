@@ -107,17 +107,25 @@ namespace Voxell.Inspector
           return;
         }
 
+        SerializedProperty elemProperty = property.GetArrayElementAtIndex(index);
+        bool isGeneric = elemProperty.propertyType == SerializedPropertyType.Generic;
+        if (isGeneric)
+        {
+          rect.x += 10.0f;
+          rect.width -= 10.0f;
+        }
+
         EditorGUI.PropertyField(
           rect, property.GetArrayElementAtIndex(index),
-          new GUIContent(showPrefix ? $"{prefix}{index}" : "")
+          new GUIContent(showPrefix ? $"{prefix}{index}" : ""), true
         );
       };
 
       list.elementHeightCallback = (int indexer) =>
       {
         SerializedProperty property = list.serializedProperty;
-        if (!property.isExpanded) return 0;
-        else return list.elementHeight;
+        if (!property.isExpanded) return 0.0f;
+        else return EditorGUI.GetPropertyHeight(property.GetArrayElementAtIndex(indexer));
       };
 
       return list;
