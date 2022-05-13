@@ -116,7 +116,7 @@ namespace Voxell.Inspector
         }
 
         EditorGUI.PropertyField(
-          rect, property.GetArrayElementAtIndex(index),
+          rect, elemProperty,
           new GUIContent(showPrefix ? $"{prefix}{index}" : ""), true
         );
       };

@@ -21,6 +21,7 @@ namespace Voxell.Inspector
 
     public override void OnInspectorGUI()
     {
+      serializedObject.Update();
       EditorGUI.BeginChangeCheck();
 
       OnRender();

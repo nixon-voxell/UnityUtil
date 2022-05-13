@@ -7,8 +7,10 @@
 ### Changes
 
 - `FoldableReorderableList`:
-  - Supports serialized structs/class.
+  - Supports serialized structs/classes.
   - Element height now depends on serialized property height.
+- Removed `AbstractVXScriptableEditor`.
+- `serializedObject` now updates every frame in `OnInspectorGUI` (in `AbstractVXEditor`) to refresh `serializedObject` representation (especially in scriptable objects).
 
 ## [1.4.1]
 
