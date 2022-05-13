@@ -3,6 +3,7 @@
 ### New Features
 
 - Added inverse lerp functions to support `float`, `float2`, and `float4` operations.
+- Added default fields to `VXEditorUtil`.
 
 ### Changes
 
@@ -11,6 +12,7 @@
   - Element height now depends on serialized property height.
 - Removed `AbstractVXScriptableEditor`.
 - `serializedObject` now updates every frame in `OnInspectorGUI` (in `AbstractVXEditor`) to refresh `serializedObject` representation (especially in scriptable objects).
+- Removed unused functions from `VXEditorUtil`.
 
 ## [1.4.1]
 

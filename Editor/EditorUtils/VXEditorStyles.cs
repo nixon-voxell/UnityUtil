@@ -7,6 +7,7 @@ namespace Voxell.Inspector
   public static class VXEditorStyles
   {
     public const int SPACE_A = 20, SPACE_B = 10;
+
     public static readonly GUIStyleState foldoutNormal = new GUIStyleState { textColor = Color.gray };
     public static readonly GUIStyleState foldoutOnNormal= new GUIStyleState { textColor = new Color(0.7f, 1f, 1f, 1f) };
 
