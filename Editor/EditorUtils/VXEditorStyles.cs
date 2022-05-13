@@ -101,9 +101,6 @@ namespace Voxell.Inspector
         list.displayRemove = property.isExpanded && displayRemoveButton;
 
         EditorGUI.indentLevel -= 1;
-
-        if (!property.isExpanded) list.footerHeight = 4.0f;
-        else list.footerHeight = 22.0f;
       };
 
       list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
@@ -146,6 +143,16 @@ namespace Voxell.Inspector
           list.elementHeight = 22.0f;
           EditorGUI.LabelField(rect, _emptyMsg);
         } else list.elementHeight = 0.0f;
+      };
+
+      list.drawFooterCallback = (Rect rect) =>
+      {
+        SerializedProperty property = list.serializedProperty;
+        if (property.isExpanded)
+        {
+          list.footerHeight = 22.0f;
+          ReorderableList.defaultBehaviours.DrawFooter(rect, list);
+        } else list.footerHeight = 0.0f;
       };
 
       return list;
