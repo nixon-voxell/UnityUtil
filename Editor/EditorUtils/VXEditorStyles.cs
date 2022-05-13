@@ -70,10 +70,13 @@ namespace Voxell.Inspector
     public static ReorderableList FoldableReorderableList(
       SerializedObject serializedObject, SerializedProperty property,
       bool draggable = true, bool displayHeader = true,
-      bool displayAddButton = true, bool displayRemoveButton = true,
-      bool multiSelect = true, string prefix = "", string header = ""
+      bool displayAddButton = true, bool displayRemoveButton = true, bool multiSelect = true,
+      string prefix = "", string header = "", string emptyMsg = ""
     )
     {
+      bool hasEmptyMsg = !string.IsNullOrEmpty(emptyMsg);
+      string _emptyMsg = hasEmptyMsg ? emptyMsg : "List is Empty";
+
       bool showPrefix = !string.IsNullOrEmpty(prefix);
       if (string.IsNullOrEmpty(header)) header = property.displayName;
 
@@ -96,17 +99,17 @@ namespace Voxell.Inspector
         list.draggable = property.isExpanded && draggable;
         list.displayAdd = property.isExpanded && displayAddButton;
         list.displayRemove = property.isExpanded && displayRemoveButton;
+
         EditorGUI.indentLevel -= 1;
+
+        if (!property.isExpanded) list.footerHeight = 4.0f;
+        else list.footerHeight = 22.0f;
       };
 
       list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
       {
         SerializedProperty property = list.serializedProperty;
-        if (!property.isExpanded)
-        {
-          GUI.enabled = index == property.arraySize-1;
-          return;
-        }
+        if (!property.isExpanded) return;
 
         SerializedProperty elemProperty = property.GetArrayElementAtIndex(index);
         bool isGeneric = elemProperty.propertyType == SerializedPropertyType.Generic;
@@ -133,6 +136,16 @@ namespace Voxell.Inspector
 
           return 0.0f;
         }
+      };
+
+      list.drawNoneElementCallback = (Rect rect) =>
+      {
+        SerializedProperty property = list.serializedProperty;
+        if (property.isExpanded)
+        {
+          list.elementHeight = 22.0f;
+          EditorGUI.LabelField(rect, _emptyMsg);
+        } else list.elementHeight = 0.0f;
       };
 
       return list;
