@@ -10,12 +10,6 @@ namespace Voxell.Inspector.List
       SerializedObject serializedObject, SerializedProperty property, EditorListConfig listConfig
     )
     {
-      bool hasEmptyMsg = !string.IsNullOrEmpty(listConfig.emptyMsg);
-      string _emptyMsg = hasEmptyMsg ? listConfig.emptyMsg : "List is Empty";
-
-      bool showPrefix = !string.IsNullOrEmpty(listConfig.prefix);
-      if (string.IsNullOrEmpty(listConfig.header)) listConfig.header = property.displayName;
-
       ReorderableList list = new ReorderableList(
         serializedObject, property,
         listConfig.draggable, listConfig.displayHeader,
@@ -29,13 +23,18 @@ namespace Voxell.Inspector.List
 
     public static void InitializeReorderableList(ReorderableList list, EditorListConfig listConfig)
     {
-      bool hasEmptyMsg = !string.IsNullOrEmpty(listConfig.emptyMsg);
-      string _emptyMsg = hasEmptyMsg ? listConfig.emptyMsg : "List is Empty";
-
-      bool showPrefix = !string.IsNullOrEmpty(listConfig.prefix);
-      if (string.IsNullOrEmpty(listConfig.header)) listConfig.header = list.serializedProperty.displayName;
-
       list.multiSelect = listConfig.multiSelect;
+      SetupDrawHeaderCallback(list, listConfig);
+      SetupDrawElementCallback(list, listConfig);
+      SetupElementHeightCallback(list);
+      SetupDrawNoneCallback(list, listConfig);
+      SetupDrawFooterCallback(list);
+    }
+
+    public static void SetupDrawHeaderCallback(ReorderableList list, EditorListConfig listConfig)
+    {
+      string header = string.IsNullOrEmpty(listConfig.header)
+        ? list.serializedProperty.displayName : listConfig.header;
 
       list.drawHeaderCallback = (Rect rect) =>
       {
@@ -44,7 +43,7 @@ namespace Voxell.Inspector.List
         EditorGUI.indentLevel += 1;
 
         property.isExpanded = EditorGUI.Foldout(
-          rect, property.isExpanded, listConfig.header, true, VXEditorStyles.ReordableFoldoutStyle
+          rect, property.isExpanded, header, true, VXEditorStyles.ReordableFoldoutStyle
         );
         list.draggable = property.isExpanded && listConfig.draggable;
         list.displayAdd = property.isExpanded && listConfig.displayAddButton;
@@ -52,6 +51,11 @@ namespace Voxell.Inspector.List
 
         EditorGUI.indentLevel -= 1;
       };
+    }
+
+    public static void SetupDrawElementCallback(ReorderableList list, EditorListConfig listConfig)
+    {
+      bool showPrefix = !string.IsNullOrEmpty(listConfig.prefix);
 
       list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
       {
@@ -71,7 +75,10 @@ namespace Voxell.Inspector.List
           new GUIContent(showPrefix ? $"{listConfig.prefix}{index}" : ""), true
         );
       };
+    }
 
+    public static void SetupElementHeightCallback(ReorderableList list)
+    {
       list.elementHeightCallback = (int indexer) =>
       {
         SerializedProperty property = list.serializedProperty;
@@ -84,6 +91,11 @@ namespace Voxell.Inspector.List
           return 0.0f;
         }
       };
+    }
+
+    public static void SetupDrawNoneCallback(ReorderableList list, EditorListConfig listConfig)
+    {
+      string emptyMsg = !string.IsNullOrEmpty(listConfig.emptyMsg) ? listConfig.emptyMsg : "List is Empty";
 
       list.drawNoneElementCallback = (Rect rect) =>
       {
@@ -91,10 +103,13 @@ namespace Voxell.Inspector.List
         if (property.isExpanded)
         {
           list.elementHeight = 22.0f;
-          EditorGUI.LabelField(rect, _emptyMsg);
+          EditorGUI.LabelField(rect, emptyMsg);
         } else list.elementHeight = 0.0f;
       };
+    }
 
+    public static void SetupDrawFooterCallback(ReorderableList list)
+    {
       list.drawFooterCallback = (Rect rect) =>
       {
         SerializedProperty property = list.serializedProperty;
