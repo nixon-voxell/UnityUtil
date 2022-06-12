@@ -1,3 +1,13 @@
+## [1.4.3]
+
+### Changes
+
+- Bump `com.unity.jobs` package version to `0.50.0-preview.9`.
+
+### Bug Fixes
+
+- Fixed `InspectOnly` height problem. Previously, it can only handle properties with single line height, now it handles all properties with all kinds of height difference using `EditorGUI.GetPropertyHeight(property, true)`.
+
 ## [1.4.2]
 
 ### New Features
