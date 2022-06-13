@@ -11,6 +11,7 @@ namespace Voxell.Mathx
     /// <returns>Group count.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int CalculateGrids(int threadCount, int grpSize) => (threadCount + grpSize - 1) / grpSize;
+
     /// <summary>Calculate the least amount of groups needed based on thread count.</summary>
     /// <param name="threadCount">total amount of size available</param>
     /// <param name="grpSize">maximum size of each divisions after the split</param>
