@@ -55,12 +55,12 @@ public class CustomInspectorTest : MonoBehaviour
 
 ```cs
 using UnityEngine;
-using Voxell.MathUtil;
+using Voxell.Mathx;
 
 // generate array [0, 1, 2, 3, 4]
-int[] shuffledArray = GenerateSeqArray(5);
+int[] shuffledArray = MathUtil.GenerateSeqArray(5);
 // shuffles array
-ShuffleArray<int>(ref shuffledArray, 3);
+MathUtil.ShuffleArray<int>(ref shuffledArray, 3);
 Debug.Log(shuffledArray);
 
 ```
