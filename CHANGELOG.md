@@ -22,6 +22,7 @@
 - Moved `CreateReorderableList` to `EditorListUtil` file.
 - Bump `com.unity.jobs` package version to `0.50.0-preview.9`.
 - Bump `com.unity.mathematics` package version to `1.2.6`.
+- Updated `README.md` docs for `Mathx`.
 
 ### Bug Fixes
 
