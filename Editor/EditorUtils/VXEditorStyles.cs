@@ -7,6 +7,7 @@ namespace Voxell.Inspector
   public static class VXEditorStyles
   {
     public const int SPACE_A = 20, SPACE_B = 10;
+
     public static readonly GUIStyleState foldoutNormal = new GUIStyleState { textColor = Color.gray };
     public static readonly GUIStyleState foldoutOnNormal= new GUIStyleState { textColor = new Color(0.7f, 1f, 1f, 1f) };
 
@@ -65,62 +66,5 @@ namespace Voxell.Inspector
 
     public static GUIStyle box => new GUIStyle(GUI.skin.box)
     { padding = new RectOffset(10, 10, 10, 10) };
-
-    public static ReorderableList FoldableReorderableList(
-      SerializedObject serializedObject, SerializedProperty property,
-      bool draggable = true, bool displayHeader = true,
-      bool displayAddButton = true, bool displayRemoveButton = true,
-      bool multiSelect = true, string prefix = "", string header = ""
-    )
-    {
-      bool showPrefix = !string.IsNullOrEmpty(prefix);
-      if (string.IsNullOrEmpty(header)) header = property.displayName;
-
-      ReorderableList list = new ReorderableList(
-        serializedObject, property,
-        draggable, displayHeader,
-        displayAddButton, displayRemoveButton
-      );
-      list.multiSelect = multiSelect;
-
-      list.drawHeaderCallback = (Rect rect) =>
-      {
-        SerializedProperty property = list.serializedProperty;
-        rect.height += 3.0f;
-        EditorGUI.indentLevel += 1;
-
-        property.isExpanded = EditorGUI.Foldout(
-          rect, property.isExpanded, header, true, ReordableFoldoutStyle
-        );
-        list.draggable = property.isExpanded && draggable;
-        list.displayAdd = property.isExpanded && displayAddButton;
-        list.displayRemove = property.isExpanded && displayRemoveButton;
-        EditorGUI.indentLevel -= 1;
-      };
-
-      list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
-      {
-        SerializedProperty property = list.serializedProperty;
-        if (!property.isExpanded)
-        {
-          GUI.enabled = index == property.arraySize-1;
-          return;
-        }
-
-        EditorGUI.PropertyField(
-          rect, property.GetArrayElementAtIndex(index),
-          new GUIContent(showPrefix ? $"{prefix}{index}" : "")
-        );
-      };
-
-      list.elementHeightCallback = (int indexer) =>
-      {
-        SerializedProperty property = list.serializedProperty;
-        if (!property.isExpanded) return 0;
-        else return list.elementHeight;
-      };
-
-      return list;
-    }
   }
 }

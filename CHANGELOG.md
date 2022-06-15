@@ -1,3 +1,33 @@
+## [1.4.2]
+
+### New Features
+
+- Added inverse lerp functions to support `float`, `float2`, and `float4` operations.
+- Added default fields to `VXEditorUtil`.
+- `CreateReorderableList` (formerly known as `FoldableReorderableList`):
+  - Supports serialized structs/classes.
+  - Element height now depends on serialized property height.
+  - Added "empty message" to display when the list is empty.
+- Created `GroupableList` class for storing a group index for each reorderable list.
+- Created `EditorListConfig` struct to store `ReorderableList` related data.
+- Added `float3x.one` to `float3x.cs`.
+
+### Changes
+
+- Removed `AbstractVXScriptableEditor`.
+- `serializedObject` now updates every frame in `OnInspectorGUI` (in `AbstractVXEditor`) to refresh `serializedObject` representation (especially in scriptable objects).
+- Removed unused functions from `VXEditorUtil`.
+- Renamed `FoldableReorderableList` to `CreateReorderableList`.
+- Added new `namespace` -> `Voxell.Inspector.List` for list specific classes/structs.
+- Moved `CreateReorderableList` to `EditorListUtil` file.
+- Bump `com.unity.jobs` package version to `0.50.0-preview.9`.
+- Bump `com.unity.mathematics` package version to `1.2.6`.
+- Updated `README.md` docs for `Mathx`.
+
+### Bug Fixes
+
+- Fixed `InspectOnly` height problem. Previously, it can only handle properties with single line height, now it handles all properties with all kinds of height difference using `EditorGUI.GetPropertyHeight(property, true)`.
+
 ## [1.4.1]
 
 ### Changes

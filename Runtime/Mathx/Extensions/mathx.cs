@@ -26,6 +26,18 @@ namespace Voxell.Mathx
 
     /// <summary>Inverse lerp.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float invlerp(float from, float to, float value) => (value - from) / (to - from);
+
+    /// <summary>Inverse lerp.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float2 invlerp(float2 from, float2 to, float2 value) => (value - from) / (to - from);
+
+    /// <summary>Inverse lerp.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float3 invlerp(float3 from, float3 to, float3 value) => (value - from) / (to - from);
+
+    /// <summary>Inverse lerp.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float4 invlerp(float4 from, float4 to, float4 value) => (value - from) / (to - from);
   }
 }

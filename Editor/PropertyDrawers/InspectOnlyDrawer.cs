@@ -12,5 +12,8 @@ namespace Voxell.Inspector
       EditorGUI.PropertyField(rect, property, label, true);
       GUI.enabled = true;
     }
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+      => EditorGUI.GetPropertyHeight(property, true);
   }
 }
