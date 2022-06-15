@@ -10,6 +10,7 @@
   - Added "empty message" to display when the list is empty.
 - Created `GroupableList` class for storing a group index for each reorderable list.
 - Created `EditorListConfig` struct to store `ReorderableList` related data.
+- Added `float3x.one` to `float3x.cs`.
 
 ### Changes
 
