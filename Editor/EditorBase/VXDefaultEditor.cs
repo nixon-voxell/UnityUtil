@@ -32,7 +32,7 @@ namespace Voxell.Inspector
       {
         EditorGUILayout.Space();
 
-        foreach (var method in _methods)
+        foreach (MethodInfo method in _methods)
           MethodButton(serializedObject.targetObject, method);
       }
     }

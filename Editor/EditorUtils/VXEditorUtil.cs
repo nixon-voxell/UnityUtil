@@ -31,7 +31,7 @@ namespace Voxell.Inspector
           .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly)
           .Where(predicate);
 
-        foreach (var methodInfo in methodInfos)
+        foreach (MethodInfo methodInfo in methodInfos)
         {
           yield return methodInfo;
         }
