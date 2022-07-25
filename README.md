@@ -8,7 +8,6 @@ This package is where all the utility functions as well as all the custom inspec
   - [Utilities](#utilities)
     - [MathUtil](#mathutil)
     - [Under the hood](#under-the-hood)
-  - [Logging](#logging)
   - [Support the project!](#support-the-project)
   - [Join the community!](#join-the-community)
   - [License](#license)
@@ -56,12 +55,12 @@ public class CustomInspectorTest : MonoBehaviour
 
 ```cs
 using UnityEngine;
-using Voxell.MathUtil;
+using Voxell.Mathx;
 
 // generate array [0, 1, 2, 3, 4]
-int[] shuffledArray = GenerateSeqArray(5);
+int[] shuffledArray = MathUtil.GenerateSeqArray(5);
 // shuffles array
-ShuffleArray<int>(ref shuffledArray, 3);
+MathUtil.ShuffleArray<int>(ref shuffledArray, 3);
 Debug.Log(shuffledArray);
 
 ```
@@ -76,34 +75,15 @@ int[] shuffledArray = new int[length];
 for (int i=0; i < length; i++) shuffledArray[i] = i;
 
 // ShuffleArray method
-int seed = 3;
-Random rand = new Random(math.max(seed, 1));
 for (int i = 0; i < shuffledArray.Length; i++)
 {
-  int randomIdx = rand.NextInt(0, shuffledArray.Length);
+  int randomIdx = UnityEngine.Random.Range(0, shuffledArray.Length);
   int tempItem = shuffledArray[randomIdx];
   shuffledArray[randomIdx] = shuffledArray[i];
   shuffledArray[i] = tempItem;
 }
 
 Debug.Log(shuffledArray);
-```
-
-## Logging
-
-```cs
-using UnityEngine;
-using Voxell;
-
-public class LoggingTest : MonoBehaviour
-{
-  public Logger logger;
-
-  public void NormalLog() => logger.ConditionalLog("NormalLog", LogImportance.Info, LogType.Log);
-  public void ImportantLog() => logger.ConditionalLog("ImportantLog", LogImportance.Important, LogType.Log);
-  public void CrucialWarning() => logger.ConditionalLog("CrucialWarning", LogImportance.Crucial, LogType.Warning);
-  public void CriticalError() => logger.ConditionalLog("CriticalError", LogImportance.Critical, LogType.Error);
-}
 ```
 
 ## Support the project!
@@ -118,8 +98,12 @@ public class LoggingTest : MonoBehaviour
 
 ## Join the community!
 
-<a href ="https://discord.gg/WDBnuNH" target="_blank">
-  <img src="https://gist.githubusercontent.com/nixon-voxell/e7ba303906080ffdf65b106f684801b5/raw/65b0338d5f4e82f700d3c9f14ec9fc62f3fd278e/JoinVXDiscord.svg" alt="discord" width="200px" height="200px"/>
+<a href ="https://discord.gg/Mhnyp6VYEQ" target="_blank">
+  <img src="https://gist.githubusercontent.com/nixon-voxell/e7ba303906080ffdf65b106f684801b5/raw/97c6dfce3459c0a2c2ea8e1b9593612346f3abfc/JoinVXDiscord.svg" alt="discord" width="200px" height="200px"/>
+</a>
+
+<a href ="https://discord.gg/X3ZucbxXFc" target="_blank">
+  <img src="https://gist.githubusercontent.com/nixon-voxell/e7ba303906080ffdf65b106f684801b5/raw/97c6dfce3459c0a2c2ea8e1b9593612346f3abfc/JoinVXGithubDiscord.svg" alt="discord" width="200px" height="200px"/>
 </a>
 
 

@@ -4,7 +4,7 @@ using Unity.Burst;
 
 namespace Voxell.Jobx
 {
-  public class ReverseJob<T> : Jobx where T : struct
+  public class ReverseJob<T> where T : struct
   {
     private int _arraySize;
     private int _jobSize;
@@ -24,7 +24,7 @@ namespace Voxell.Jobx
     /// <summary>Reverse native array in parallel.</summary>
     public void ReverseArray()
     {
-      JobHandle jobHandle = reverseArrayJob.Schedule(_jobSize, XL_BATCH_SIZE);
+      JobHandle jobHandle = reverseArrayJob.Schedule(_jobSize, Jobx.XL_BATCH_SIZE);
       jobHandle.Complete();
     }
 

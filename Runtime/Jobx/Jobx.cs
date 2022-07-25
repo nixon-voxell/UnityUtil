@@ -1,8 +1,6 @@
-using Unity.Mathematics;
-
 namespace Voxell.Jobx
 {
-  public abstract class Jobx
+  public static class Jobx
   {
     // how to use??
     // if the computation of each element is fairly simple,

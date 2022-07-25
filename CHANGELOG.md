@@ -1,15 +1,73 @@
+## [1.4.2]
+
+### New Features
+
+- Added inverse lerp functions to support `float`, `float2`, and `float4` operations.
+- Added default fields to `VXEditorUtil`.
+- `CreateReorderableList` (formerly known as `FoldableReorderableList`):
+  - Supports serialized structs/classes.
+  - Element height now depends on serialized property height.
+  - Added "empty message" to display when the list is empty.
+- Created `GroupableList` class for storing a group index for each reorderable list.
+- Created `EditorListConfig` struct to store `ReorderableList` related data.
+- Added `float3x.one` to `float3x.cs`.
+
+### Changes
+
+- Removed `AbstractVXScriptableEditor`.
+- `serializedObject` now updates every frame in `OnInspectorGUI` (in `AbstractVXEditor`) to refresh `serializedObject` representation (especially in scriptable objects).
+- Removed unused functions from `VXEditorUtil`.
+- Renamed `FoldableReorderableList` to `CreateReorderableList`.
+- Added new `namespace` -> `Voxell.Inspector.List` for list specific classes/structs.
+- Moved `CreateReorderableList` to `EditorListUtil` file.
+- Bump `com.unity.jobs` package version to `0.50.0-preview.9`.
+- Bump `com.unity.mathematics` package version to `1.2.6`.
+- Updated `README.md` docs for `Mathx`.
+
+### Bug Fixes
+
+- Fixed `InspectOnly` height problem. Previously, it can only handle properties with single line height, now it handles all properties with all kinds of height difference using `EditorGUI.GetPropertyHeight(property, true)`.
+
+## [1.4.1]
+
+### Changes
+
+- `FoldableReorderableList`:
+  - Optional parameters for `draggable`, `displayHeader`, `displayAddButton`, `displayRemoveButton`, `multiSelect`, and `prefix`.
+  - `multiSelect` is a newly added parameter.
+  - Increase header rect by 3.0f to allow characters like 'g' and 'y' to be fully rendered.
+  - Uses serialized property from the list instead of the cached serialized property taken in as the function's parameter.
+  - Added parameter to change header string.
+- `spaceA` and `spaceB` changed to `SPACE_A` and `SPACE_B` respectively.
+- `InspectorView` returns `Editor` when initializing.
+- `OnChange` method implemented for abstract editors. This method will be called whenever there is any changes made to the editor.
+
 ## [1.4.0]
 
 ### New Features
 
-- Native Containers
-  - Native Exchange Array (atomic exchange of an array of int).
+- Custom Editor Views for UIBuilder
+  - Inspector View
+  - Split View
+- Abstract Editor and Abstract Scriptable Editor.
+- Graphics
+  - `Blelloch Sum Scan` compute shader.
+  - `Hillis Steele Sum Scan` compute shader.
+  - `AABB Scan` compute shader.
+  - `Radix Sort` compute shader.
+  - unit tests for each of them.
+- Added "writing" methods to streaming asset files in `FileUtilx`.
 
 ### Changes
 
 - Added `ReadOnly` and `WriteOnly` tags to native arrays on `Jobx` where neccessary.
 - Improved performance of `Min/Max/Sum Scan` by increasing the batch size.
 - Prevent the allocation of new array everytime a new scan/sort is needed by caching it during initialization.
+- Removed Logging class.
+- added NativeGetTangents method (MeshUtil).
+- Shuffle array method in MathUtil now uses UnityEngine.Random instead of Unity.Mathematics.Random for easier usage (no need to think about what seed to provide & since it is a serial method).
+- Renamed `Init()` method to `InitKernels()`.
+- `NativeContainers` completely removed. (this action has been made due to the additional complexitiy when using native containers on simple tasks like `Interlocked.Exchange` or `Interlocked.Increment`, these operations can be done quite easily using unsafe and pointers in a Job System)
 
 ## [1.3.0]
 

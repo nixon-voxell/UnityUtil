@@ -28,7 +28,7 @@ namespace Voxell.Inspector.Tools
     [MenuItem("Tools/Voxell/Mesh Info")]
     public static void ShowWindow()
     {
-      var window = GetWindow(typeof(ShowSelectedMeshInfo));
+      EditorWindow window = GetWindow(typeof(ShowSelectedMeshInfo));
       window.titleContent = new GUIContent("Mesh Info");
     }
 
