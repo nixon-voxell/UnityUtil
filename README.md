@@ -47,7 +47,7 @@ public class CustomInspectorTest : MonoBehaviour
 }
 ```
 
-![CustomPropertyAttribute](./Pictures~/CustomPropertyAttribute.png)
+![CustomPropertyAttribute](./Assets/_PackageRoot/Pictures~/CustomPropertyAttribute.png)
 
 ## Utilities
 
