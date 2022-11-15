@@ -15,7 +15,7 @@ This package is where all the utility functions as well as all the custom inspec
 
 ## Installation
 - Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
-- Run command in your project folder `openupm add github.voxell.unity.util`
+- Run command in your project folder `openupm add com.github.voxell.unity.util`
 
 ## Custom Property Attribute
 
