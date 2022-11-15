@@ -14,11 +14,8 @@ This package is where all the utility functions as well as all the custom inspec
   - [References](#references)
 
 ## Installation
-
-There are no external dependencies for this package.
-
-1. Clone this repository into your `Packages` folder.
-2. And you are ready to go!
+- Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
+- Run command in your project folder `openupm add github.voxell.unity.util`
 
 ## Custom Property Attribute
 
