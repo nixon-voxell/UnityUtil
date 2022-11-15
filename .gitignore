@@ -57,13 +57,18 @@ sysinfo.txt
 
 # Builds
 *.apk
+*.aab
 *.unitypackage
+*.exe
 
 # Crashlytics generated file
 crashlytics-build.properties
 
 */AndroidLogcatSettings.asset
-/Assets/StreamingAssets
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -82,9 +87,7 @@ crashlytics-build.properties
 *.h5
 *.h5.meta
 *.pbmm
-*.pbmm.meta
 *.tflite
-*.tflite.meta
 # API keys
 *.apikey
 # pycaches
