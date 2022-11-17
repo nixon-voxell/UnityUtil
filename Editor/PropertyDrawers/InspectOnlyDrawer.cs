@@ -8,9 +8,10 @@ namespace Voxell.Inspector
   {
     public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
     {
+      bool guiEnabled = GUI.enabled;
       GUI.enabled = false;
       EditorGUI.PropertyField(rect, property, label, true);
-      GUI.enabled = true;
+      GUI.enabled = guiEnabled;
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
