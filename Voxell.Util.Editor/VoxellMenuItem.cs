@@ -1,7 +1,7 @@
 using UnityEditor;
 using System.Reflection;
 
-namespace Voxell.Inspector.Tools
+namespace Voxell.Util.Editor
 {
     public static class VoxellMenuItem
     {
