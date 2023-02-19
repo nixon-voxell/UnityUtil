@@ -106,7 +106,6 @@ Debug.Log(shuffledArray);
   <img src="https://gist.githubusercontent.com/nixon-voxell/e7ba303906080ffdf65b106f684801b5/raw/97c6dfce3459c0a2c2ea8e1b9593612346f3abfc/JoinVXGithubDiscord.svg" alt="discord" width="200px" height="200px"/>
 </a>
 
-
 ## License
 
 This repository as a whole is licensed under the Apache License 2.0. Individual files may have a different, but compatible license.
