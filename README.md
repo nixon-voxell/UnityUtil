@@ -5,17 +5,17 @@ This package is where all the utility functions as well as all the custom inspec
 - [Unity Utilities](#unity-utilities)
   - [Installation](#installation)
   - [Custom Property Attribute](#custom-property-attribute)
-  - [Utilities](#utilities)
-    - [MathUtil](#mathutil)
-    - [Under the hood](#under-the-hood)
   - [Support the project!](#support-the-project)
   - [Join the community!](#join-the-community)
   - [License](#license)
   - [References](#references)
 
 ## Installation
-- Install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
-- Run command in your project folder `openupm add com.github.voxell.unityutil`
+
+There are no external dependencies for this package.
+
+1. Clone this repository into your `Packages` folder.
+2. And you are ready to go!
 
 ## Custom Property Attribute
 
@@ -45,43 +45,6 @@ public class CustomInspectorTest : MonoBehaviour
 ```
 
 ![CustomPropertyAttribute](./Pictures~/CustomPropertyAttribute.png)
-
-## Utilities
-
-### MathUtil
-
-```cs
-using UnityEngine;
-using Voxell.Mathx;
-
-// generate array [0, 1, 2, 3, 4]
-int[] shuffledArray = MathUtil.GenerateSeqArray(5);
-// shuffles array
-MathUtil.ShuffleArray<int>(ref shuffledArray, 3);
-Debug.Log(shuffledArray);
-
-```
-### Under the hood
-
-```cs
-using Unity.Mathematics;
-
-// GenerateSeqArray method
-int length = 5;
-int[] shuffledArray = new int[length];
-for (int i=0; i < length; i++) shuffledArray[i] = i;
-
-// ShuffleArray method
-for (int i = 0; i < shuffledArray.Length; i++)
-{
-  int randomIdx = UnityEngine.Random.Range(0, shuffledArray.Length);
-  int tempItem = shuffledArray[randomIdx];
-  shuffledArray[randomIdx] = shuffledArray[i];
-  shuffledArray[i] = tempItem;
-}
-
-Debug.Log(shuffledArray);
-```
 
 ## Support the project!
 

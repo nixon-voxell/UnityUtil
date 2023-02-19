@@ -1,0 +1,16 @@
+{
+    "name": "Voxell.Util.Editor",
+    "rootNamespace": "Voxell.Util.Editor",
+    "references": [
+        "GUID:5d380aad12070eb419c6e27b68ec6534"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
