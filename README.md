@@ -4,7 +4,6 @@ This package is where all the utility functions as well as all the custom inspec
 
 - [Unity Utilities](#unity-utilities)
   - [Installation](#installation)
-  - [Custom Property Attribute](#custom-property-attribute)
   - [Support the project!](#support-the-project)
   - [Join the community!](#join-the-community)
   - [License](#license)
@@ -16,35 +15,6 @@ There are no external dependencies for this package.
 
 1. Clone this repository into your `Packages` folder.
 2. And you are ready to go!
-
-## Custom Property Attribute
-
-```cs
-using UnityEngine;
-using Voxell.Inspector;
-
-public class CustomInspectorTest : MonoBehaviour
-{
-  [Scene]
-  public string testScene;
-  [Scene]
-  public string[] testSceneArray;
-  [InspectOnly]
-  public int inspectOnlyInt;
-
-  [StreamingAssetFilePath]
-  public string streamingAssetFilePath;
-  [StreamingAssetFolderPath]
-  public string streamingAssetFolderPath;
-
-  [Button]
-  void TestButton() => Debug.Log("TestButton function invoked!");
-  [Button("Super Button")]
-  void AnotherTestButton() => Debug.Log("Button with Super Button name pressed!");
-}
-```
-
-![CustomPropertyAttribute](./Pictures~/CustomPropertyAttribute.png)
 
 ## Support the project!
 
