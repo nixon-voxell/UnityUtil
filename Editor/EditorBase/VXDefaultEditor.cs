@@ -10,7 +10,7 @@ namespace Voxell.Inspector
 {
   [CanEditMultipleObjects]
   [CustomEditor(typeof(UnityEngine.Object), true)]
-  public class VXDefaultEditor : UnityEditor.Editor
+  public class VXDefaultEditor : Editor
   {
     private IEnumerable<MethodInfo> _methods;
 
@@ -32,7 +32,7 @@ namespace Voxell.Inspector
       {
         EditorGUILayout.Space();
 
-        foreach (var method in _methods)
+        foreach (MethodInfo method in _methods)
           MethodButton(serializedObject.targetObject, method);
       }
     }
