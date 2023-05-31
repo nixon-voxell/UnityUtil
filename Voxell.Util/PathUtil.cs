@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Voxell.Util
 {
-    public static class FileUtilx
+    public static class PathUtil
     {
         public static readonly string projectPath = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
 
@@ -53,41 +53,41 @@ namespace Voxell.Util
         /// <summary>Return the full file path given an asset path</summary>
         /// <param name="assetPath">Path that starts from the 'Assets/' folder</param>
         public static string GetAssetFilePath(string assetPath)
-          => Path.Combine(projectPath, assetPath);
+            => Path.Combine(projectPath, assetPath);
 
         /// <summary>Return the full file path given a streaming asset path</summary>
         /// <param name="streamingAssetPath">Path that is in the StreamingAssets/ folder</param>
         public static string GetStreamingAssetFilePath(string streamingAssetPath)
-          => Path.Combine(Application.streamingAssetsPath, streamingAssetPath);
+            => Path.Combine(Application.streamingAssetsPath, streamingAssetPath);
 
         /// <summary>Read a streaming asset file and return raw bytes from the file</summary>
         /// <param name="path">file path starting from and excluding Application.streamingAssetsPath</param>
         /// <returns>Raw bytes from the file</returns>
         public static byte[] ReadStreamingAssetFileByte(string path)
-          => File.ReadAllBytes(GetStreamingAssetFilePath(path));
+            => File.ReadAllBytes(GetStreamingAssetFilePath(path));
 
         /// <summary>Read a streaming asset file and return raw string from the file</summary>
         /// <param name="path">file path starting excluding Application.streamingAssetsPath</param>
         /// <returns>Raw string from the file</returns>
         public static string ReadStreamingAssetFileText(string path)
-          => File.ReadAllText(GetStreamingAssetFilePath(path));
+            => File.ReadAllText(GetStreamingAssetFilePath(path));
 
         /// <summary>Write string contents to a streaming asset file</summary>
         /// <param name="path">file path starting excluding Application.streamingAssetsPath</param>
         /// <returns>Raw string from the file</returns>
         public static void WriteStreamingAssetFileText(string path, string contents)
-          => File.WriteAllText(GetStreamingAssetFilePath(path), contents);
+            => File.WriteAllText(GetStreamingAssetFilePath(path), contents);
 
         /// <summary>Write string contents to a streaming asset file</summary>
         /// <param name="path">file path starting excluding Application.streamingAssetsPath</param>
         /// <returns>Raw string from the file</returns>
         public static void WriteStreamingAssetFileText(string path, string contents, Encoding encoding)
-          => File.WriteAllText(GetStreamingAssetFilePath(path), contents, encoding);
+            => File.WriteAllText(GetStreamingAssetFilePath(path), contents, encoding);
 
         /// <summary>Write byte contents to a streaming asset file</summary>
         /// <param name="path">file path starting excluding Application.streamingAssetsPath</param>
         /// <returns>Raw string from the file</returns>
         public static void WriteStreamingAssetFileByte(string path, byte[] bytes)
-          => File.WriteAllBytes(GetStreamingAssetFilePath(path), bytes);
+            => File.WriteAllBytes(GetStreamingAssetFilePath(path), bytes);
     }
 }

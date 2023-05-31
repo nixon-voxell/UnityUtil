@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using Unity.Mathematics;
 
-namespace Voxell.Mathx
+namespace Voxell.Util
 {
     public static class mathx
     {
