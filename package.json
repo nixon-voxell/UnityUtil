@@ -1,7 +1,7 @@
 {
   "name": "voxell.util",
-  "displayName": "VX Util",
-  "author": "Nixon",
+  "displayName": "Util",
+  "author": "@Voxell",
   "description": "Unity utilities to speed things up!",
   "keywords": [
     "util",
