@@ -1,110 +1,148 @@
-using UnityEngine;
-using Unity.Collections;
+using System.Runtime.CompilerServices;
+using UnityEngine.Rendering;
 using Unity.Mathematics;
+using Unity.Collections;
 
 namespace Voxell
 {
+    using UnityEngine;
     public static class MeshUtil
     {
-        /// <summary>Creates a deep copy of a mesh.</summary>
-        /// <param name="originMesh">source of mesh to copy from</param>
-        /// <param name="newMesh">location of copied mesh</param>
-        public static void DeepCopyMesh(in Mesh originMesh, out Mesh newMesh)
+        /// <summary>VertexAttributeFormat size in bytes.</summary>
+        /// <remarks>Refer to: https://docs.unity3d.com/ScriptReference/Rendering.VertexAttributeFormat.html</remarks>
+        private static readonly uint[] VertexAttributeFormatSize = new uint[]
         {
-            newMesh = new Mesh();
-            newMesh.vertices = originMesh.vertices;
-            newMesh.triangles = originMesh.triangles;
-            newMesh.uv = originMesh.uv;
-            newMesh.normals = originMesh.normals;
-            newMesh.colors = originMesh.colors;
-            newMesh.tangents = originMesh.tangents;
+            // 8 bytes per bit:
+            32u / 8u, // float32
+            16u / 8u, // float16
+            8u  / 8u, // unorm8
+            8u  / 8u, // snorm8
+            16u / 8u, // unorm16
+            16u / 8u, // snorm16
+            8u  / 8u, // uint8
+            8u  / 8u, // sint8
+            16u / 8u, // uint16
+            16u / 8u, // sint16
+            32u / 8u, // uint32
+            32u / 8u, // sint32
+        };
 
-            int subMeshCount = originMesh.subMeshCount;
-            newMesh.subMeshCount = subMeshCount;
-            for (int s = 0; s < subMeshCount; s++)
-                newMesh.SetSubMesh(s, originMesh.GetSubMesh(s));
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint GetVertexAttributeFormatSize(VertexAttributeFormat format)
+        {
+            return VertexAttributeFormatSize[(int)format];
         }
 
         /// <summary>Get native array of mesh vertices.</summary>
         /// <param name="meshData">mesh data</param>
         /// <param name="allocator">allocation type</param>
-        public static void NativeGetVertices(
-          in Mesh.MeshData meshData,
-          out NativeArray<float3> na_vertices, Allocator allocator
-        )
+        public static NativeArray<float3> GetNativeVertices(in Mesh.MeshData meshData, Allocator allocator)
         {
             int vertexCount = meshData.vertexCount;
-            NativeArray<Vector3> na_verticesVec3 = new NativeArray<Vector3>(vertexCount, allocator);
-            meshData.GetVertices(na_verticesVec3);
-            na_vertices = na_verticesVec3.Reinterpret<float3>();
+            NativeArray<Vector3> na_vertices = new NativeArray<Vector3>(vertexCount, allocator);
+            meshData.GetVertices(na_vertices);
+            return na_vertices.Reinterpret<float3>();
         }
 
         /// <summary>Get native array of mesh normals.</summary>
         /// <param name="meshData">mesh data</param>
         /// <param name="allocator">allocation type</param>
-        public static void NativeGetNormals(
-          in Mesh.MeshData meshData,
-          out NativeArray<float3> na_normals, Allocator allocator)
+        public static NativeArray<float3> GetNativeNormals(in Mesh.MeshData meshData, Allocator allocator)
         {
-            int indexCount = meshData.vertexCount;
-            NativeArray<Vector3> na_normalsVec3 = new NativeArray<Vector3>(indexCount, allocator);
-            meshData.GetNormals(na_normalsVec3);
-            na_normals = na_normalsVec3.Reinterpret<float3>();
+            int vertexCount = meshData.vertexCount;
+            NativeArray<Vector3> na_normals = new NativeArray<Vector3>(vertexCount, allocator);
+            meshData.GetNormals(na_normals);
+            return na_normals.Reinterpret<float3>();
         }
 
         /// <summary>Get native array of mesh normals.</summary>
         /// <param name="meshData">mesh data</param>
         /// <param name="allocator">allocation type</param>
-        public static void NativeGetTangents(
-          in Mesh.MeshData meshData,
-          out NativeArray<float4> na_tangents, Allocator allocator)
+        public static NativeArray<float4> GetNativeTangents(in Mesh.MeshData meshData, Allocator allocator)
         {
-            int indexCount = meshData.vertexCount;
-            NativeArray<Vector4> na_tangentsVec3 = new NativeArray<Vector4>(indexCount, allocator);
-            meshData.GetTangents(na_tangentsVec3);
-            na_tangents = na_tangentsVec3.Reinterpret<float4>();
+            int vertexCount = meshData.vertexCount;
+            NativeArray<Vector4> na_tangents = new NativeArray<Vector4>(vertexCount, allocator);
+            meshData.GetTangents(na_tangents);
+            return na_tangents.Reinterpret<float4>();
         }
 
         /// <summary>Get native array of uv coordinates.</summary>
         /// <param name="meshData">mesh data</param>
         /// <param name="allocator">allocation type</param>
-        public static void NativeGetUVs(
-          in Mesh.MeshData meshData, int channel,
-          out NativeArray<float2> na_uvs, Allocator allocator
-        )
+        public static NativeArray<float2> GetNativeUVs(in Mesh.MeshData meshData, int channel, Allocator allocator)
         {
             int vertexCount = meshData.vertexCount;
-            NativeArray<Vector2> na_verticesVec2 = new NativeArray<Vector2>(vertexCount, allocator);
-            meshData.GetUVs(channel, na_verticesVec2);
-            na_uvs = na_verticesVec2.Reinterpret<float2>();
+            NativeArray<Vector2> na_vertices = new NativeArray<Vector2>(vertexCount, allocator);
+            meshData.GetUVs(channel, na_vertices);
+            return na_vertices.Reinterpret<float2>();
         }
 
         /// <summary>Get native array of vertex colors.</summary>
         /// <param name="meshData">mesh data</param>
         /// <param name="allocator">allocation type</param>
-        public static void NativeGetColors(
-          in Mesh.MeshData meshData,
-          out NativeArray<float4> na_colors, Allocator allocator)
+        public static NativeArray<float4> GetNativeColors(in Mesh.MeshData meshData, Allocator allocator)
         {
             int vertexCount = meshData.vertexCount;
-            NativeArray<Color> na_colorsVec2 = new NativeArray<Color>(vertexCount, allocator);
-            na_colors = new NativeArray<float4>(vertexCount, allocator);
-            meshData.GetColors(na_colorsVec2);
-            na_colors = na_colorsVec2.Reinterpret<float4>();
+            NativeArray<Color> na_colors = new NativeArray<Color>(vertexCount, allocator);
+            meshData.GetColors(na_colors);
+            return na_colors.Reinterpret<float4>();
         }
 
         /// <summary>Get native array of triangle indices.</summary>
         /// <param name="meshData">mesh data</param>
         /// <param name="allocator">allocation type</param>
-        public static void NativeGetIndices(
-          in Mesh.MeshData meshData,
-          out NativeArray<int> na_triangles, Allocator allocator, int submesh = 0)
+        public static NativeArray<int> GetNativeIndices(in Mesh.MeshData meshData, Allocator allocator, int submesh=0)
         {
             int indexCount = meshData.GetSubMesh(submesh).indexCount;
-            na_triangles = new NativeArray<int>(indexCount, allocator);
+            NativeArray<int> na_triangles = new NativeArray<int>(indexCount, allocator);
             meshData.GetIndices(na_triangles, submesh);
+            return na_triangles;
         }
 
+        /// <summary>Get native array of triangle indices.</summary>
+        /// <param name="meshData">mesh data</param>
+        /// <param name="allocator">allocation type</param>
+        public static NativeArray<int> GetAllNativeIndices(in Mesh.MeshData meshData, Allocator allocator)
+        {
+            NativeList<int> na_trianglesList = new NativeList<int>(Allocator.Temp);
+
+            for (int sm = 0; sm < meshData.subMeshCount; sm++)
+            {
+                int indexCount = meshData.GetSubMesh(sm).indexCount;
+
+                NativeArray<int> na_subTriangles = new NativeArray<int>(indexCount, Allocator.Temp);
+                meshData.GetIndices(na_subTriangles, sm);
+
+                na_trianglesList.AddRange(na_subTriangles);
+            }
+
+            NativeArray<int> na_triangles = new NativeArray<int>(na_trianglesList.Length, allocator, NativeArrayOptions.UninitializedMemory);
+            na_triangles.CopyFrom(na_trianglesList.AsArray());
+            return na_triangles;
+        }
+
+        /// <summary>Creates a deep copy of a mesh.</summary>
+        /// <param name="originMesh">source of mesh to copy from</param>
+        /// <param name="targetMesh">location of copied mesh</param>
+        public static Mesh DeepCopyMesh(in Mesh originMesh)
+        {
+            Mesh targetMesh = new Mesh();
+            targetMesh.vertices = originMesh.vertices;
+            targetMesh.triangles = originMesh.triangles;
+            targetMesh.uv = originMesh.uv;
+            targetMesh.normals = originMesh.normals;
+            targetMesh.colors = originMesh.colors;
+            targetMesh.tangents = originMesh.tangents;
+
+            int subMeshCount = originMesh.subMeshCount;
+            targetMesh.subMeshCount = subMeshCount;
+            for (int s = 0; s < subMeshCount; s++)
+                targetMesh.SetSubMesh(s, originMesh.GetSubMesh(s));
+
+            return targetMesh;
+        }
+
+        // TODO: turn this into job based
         /// <summary>
         /// Reverse the triangle order of the mesh to flip the mesh
         /// </summary>
@@ -126,48 +164,6 @@ namespace Voxell
             Vector3[] normals = mesh.normals;
             for (int n = 0; n < normals.Length; n++) normals[n] = -normals[n];
             mesh.SetNormals(normals);
-        }
-
-        public static void SeparateTriangles(
-          ref Vector3[] verts,
-          ref ushort[] indices,
-          ref Color[] colors,
-          ref Vector2[] uvs,
-          out Mesh mesh
-        )
-        {
-            int totalTris = indices.Length / 3;
-            Vector3[] newVerts = new Vector3[indices.Length];
-            ushort[] newIndices = new ushort[indices.Length];
-            Color[] newColors = new Color[indices.Length];
-            Vector2[] newUvs = new Vector2[indices.Length];
-
-            for (int t = 0; t < totalTris; t++)
-            {
-                int t0 = indices[t * 3];
-                int t1 = indices[t * 3 + 1];
-                int t2 = indices[t * 3 + 2];
-
-                newVerts[t * 3] = verts[t0];
-                newVerts[t * 3 + 1] = verts[t1];
-                newVerts[t * 3 + 2] = verts[t2];
-
-                newColors[t * 3] = colors[t0];
-                newColors[t * 3 + 1] = colors[t1];
-                newColors[t * 3 + 2] = colors[t2];
-
-                newUvs[t * 3] = uvs[t0];
-                newUvs[t * 3 + 1] = uvs[t1];
-                newUvs[t * 3 + 2] = uvs[t2];
-            }
-
-            for (ushort i = 0; i < indices.Length; i++) newIndices[i] = i;
-
-            mesh = new Mesh();
-            mesh.SetVertices(newVerts);
-            mesh.SetIndices(newIndices, MeshTopology.Triangles, 0);
-            mesh.SetColors(newColors);
-            mesh.SetUVs(0, newUvs);
         }
     }
 }

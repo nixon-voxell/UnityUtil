@@ -1,6 +1,6 @@
 {
   "name": "voxell.util",
-  "displayName": "Util",
+  "displayName": "@Util",
   "author": "@Voxell",
   "description": "Unity utilities to speed things up!",
   "keywords": [
@@ -11,7 +11,8 @@
   "unity": "2020.3",
   "version": "0.1.0",
   "dependencies": {
-    "com.unity.mathematics": "1.2.6"
+    "com.unity.mathematics": "1.2.6",
+    "com.unity.collections": "2.1.4"
   },
   "hideInEditor": false
 }
