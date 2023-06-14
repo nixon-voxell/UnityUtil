@@ -1,0 +1,14 @@
+{
+    "name": "Voxell.Util.Interface",
+    "rootNamespace": "Voxell.Util.Interface",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
